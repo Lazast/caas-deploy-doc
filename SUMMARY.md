@@ -8,8 +8,7 @@
 * [docker](docker.md)
 * [keepalived&haproxy](keepalivedandhaproxy.md)
 * [harbor](harbor.md)
-* ldap
-* [nfs](nfs.md)
+* [ldap](ldap.md)
 * [nfs](nfs.md)
 * [openshift master](openshift-master.md)
 * [openshift node](openshift-node.md)
