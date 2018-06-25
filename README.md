@@ -1,3 +1,15 @@
-# My Awesome Book
+# caas 产品部署手册
 
-This file file serves as your book's preface, a great place to describe your book's content and ideas.
+本文主要讲解caas产品的部署
+
+# Labs
+
+本教程建议使用centos7 环境
+
+* 1 
+* 2
+
+
+
+
+

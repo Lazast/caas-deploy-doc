@@ -1,3 +1,6 @@
 # Summary
 
-* [First Chapter](chapter1.md)
+* [Introduction](README.md)
+* [Prerequisites](chapter1.md)
+* Installing the Client Tools
+
