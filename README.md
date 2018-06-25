@@ -6,9 +6,7 @@
 
 本教程建议使用centos7 环境
 
-
-
 ---
 
-[SUMMARY.md](/SUMMARY.md)
+[SUMMARY.md](/SUMMARY.md "列表")
 
