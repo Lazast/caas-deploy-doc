@@ -13,4 +13,5 @@
 * [openshift master](openshift-master.md)
 * [openshift node](openshift-node.md)
 * [caas ](caas.md)
+* [smoke test](smoke-test.md)
 
