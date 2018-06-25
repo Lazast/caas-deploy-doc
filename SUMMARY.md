@@ -6,12 +6,12 @@
 * [Prerequisites](Prerequistes.md)
 * [host roles](host-role.md)
 * [docker](docker.md)
+* [keepalived&haproxy](keepalivedandhaproxy.md)
 * [harbor](harbor.md)
 * ldap
-* nfs
-* mysql
-* [keepalived&haproxy](keepalivedandhaproxy.md)
-* nfs
+* [nfs](nfs.md)
+* [nfs](nfs.md)
 * [openshift master](openshift-master.md)
 * [openshift node](openshift-node.md)
+* [caas ](caas.md)
 
