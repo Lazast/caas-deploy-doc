@@ -1,6 +1,6 @@
 # Summary
 
 * [Introduction](README.md)
-* [Prerequisites](chapter1.md)
-* Installing the Client Tools
+* [Prerequisites](Prerequistes.md)
+* [Installing the Client Tools](installing-the-client-tools.md)
 
