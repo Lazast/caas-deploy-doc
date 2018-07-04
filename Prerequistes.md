@@ -29,7 +29,17 @@ for h in $hosts; do
 
 done
 
+for h in $hosts; do
 
+    scp ~/.bash_caas_env root@$h:~
+
+done
+
+for h in $hosts; do
+
+    ssh root@$h echo ". ~/.bash_caas_env" >> ~/.bashrc
+
+done
 ```
 
 # 安装离线包
