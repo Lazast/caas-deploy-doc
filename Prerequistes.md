@@ -44,13 +44,13 @@ done
 
 ```
 {
-ssh root@${CAAS_MASTER1}
+ssh root@${CAAS_HOST_MASTER1}
 }
 ```
 
 ## 配置离线安装包
 
-> 在CAAS\_MASTER1 上 ，找一块分区，分区大小必须 &gt; 50G， 若没有大于50G的分区，请联系客户或相关人员，增加盘或者划分去
+> 在CAAS\_HOST\_MASTER1 上 ，找一块分区，分区大小必须 &gt; 50G， 若没有大于50G的分区，请联系客户或相关人员，增加盘或者划分去
 >
 > 分区查看命令  （Avail）
 
@@ -94,7 +94,7 @@ fi
 
 ```
 {
-scp ./caas-offline.tar root@${CAAS_MASTER1}:~
+scp ./caas-offline.tar root@${CAAS_HOST_MASTER1}:~
 
 }
 ```
@@ -104,7 +104,7 @@ scp ./caas-offline.tar root@${CAAS_MASTER1}:~
 ```
 {
 # 重新登录CAAS_MASTER1
-ssh root@${CAAS_MASTER1}
+ssh root@${CAAS_HOST_MASTER1}
 }
 ```
 
@@ -127,6 +127,27 @@ iptables -I INPUT -p tcp  --dport 38888 -j ACCEPT
 # 
 
 # master1配置ansible
+
+> 配置本地yum 源
+
+```
+cd /etc/yum.repos.d
+mkdir back
+mv *.repo back/
+
+cat > caas.repo << EOF
+
+[caas]
+name=caas-offline-local
+failovermethod=priority
+baseurl=http://$CAAS_HOST_MASTER1:38888/
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os
+#gpgcheck=1
+#gpgkey=http://mirrors.haihangyun.com/centos/RPM-GPG-KEY-CentOS-7
+
+
+EOF
+```
 
 ## 
 
