@@ -23,23 +23,19 @@ for h in $hosts; do
 
 done
 
-for h in $hosts; do
 
-    scp ~/.bash_caas_env root@$h:~
+#for h in $hosts; do
 
-done
+#    scp ~/.bash_caas_env root@$h:~
 
-for h in $hosts; do
+#done
 
-    scp ~/.bash_caas_env root@$h:~
 
-done
+#for h in $hosts; do
 
-for h in $hosts; do
+#    ssh root@$h "  sed -i '/^\.\ ~\/\.bash_caas_env/d' ~/.bashrc  ; echo \". ~/.bash_caas_env\" >> ~/.bashrc"
 
-    ssh root@$h "  sed -i '/^\.\ ~\/\.bash_caas_env/d' ~/.bashrc  ; echo \". ~/.bash_caas_env\" >> ~/.bashrc"
-
-done
+#done
 ```
 
 # 安装离线包
@@ -128,11 +124,7 @@ nohup python -m SimpleHTTPServer 38888 &
 iptables -I INPUT -p tcp  --dport 38888 -j ACCEPT
 ```
 
-
-
 # 配置yum 源
-
-
 
 ## 
 
