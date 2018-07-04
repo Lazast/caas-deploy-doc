@@ -176,6 +176,7 @@ cat > ansible_hosts <<EOF
 masters
 nodes
 storages
+lbs
 
 [masters]
 $(cat /tmp/masters)
