@@ -157,7 +157,16 @@ mkdir install
 cd  install
 
 env |grep CAAS_HOST_MASTER |awk -F '=' '{print $2}' > /tmp/masters
-env |grep CAAS_HOST_NODE |awk -F '=' '{print $2}' > /tmp/nodes
+host_nodes=$(env |grep CAAS_HOST_NODE |awk -F '=' '{print $2}')
+cat > /tmp/nodes << EOF
+
+EOF
+
+for i in $host_nodes; do
+  echo $i >> /tmp/nodes
+done
+  
+  
 env |grep CAAS_HOST_LB |awk -F '=' '{print $2}' > /tmp/lbs
 env |grep CAAS_HOST_STORAGE |awk -F '=' '{print $2}' > /tmp/storage
 
