@@ -99,10 +99,11 @@ ssh root@${CAAS_MASTER1}
 ```
 tar xvf ~/caas-offline.tar -C $offlinedata
 
-cd $offlinedata/caas-offline
+cd $offlinedata/caas-offline/cent7.2
 
+# 启动 http 服务
 
-
+nohup python -m SimpleHTTPServer 38888 &
 ```
 
 ## 离线安装包
