@@ -4,7 +4,7 @@
 
 安装caas 平台提前需要准备的工具
 
-## 免密登陆
+## 对MASTER1免密登陆
 
 配置部署者本地机器，对 CAAS\_MASTER1  机器的ssh 免密登陆，要求本地机器是linux 环境
 
@@ -21,16 +21,47 @@
 
 
    ssh-copy-id root@${CAAS_MASTER1}
+   
+   
 }
 ```
 
-## 
-
-## 安装包
+## 登陆CAAS\_MASTER1
 
 ```
- yum install vim -y
+{
+ssh root@${CAAS_MASTER1}
+}
 ```
+
+
+
+
+
+## 配置离线安装包
+
+> 在CAAS\_MASTER1 上 ，找一块分区，分区大小必须 &gt; 50G
+>
+> 分区查看命令  （Avail）
+
+```
+df -h
+
+
+Filesystem               Size  Used Avail Use% Mounted on
+/dev/mapper/centos-root   36G  2.3G   34G   7% /
+devtmpfs                 7.8G     0  7.8G   0% /dev
+tmpfs                    7.8G     0  7.8G   0% /dev/shm
+tmpfs                    7.8G  8.6M  7.8G   1% /run
+tmpfs                    7.8G     0  7.8G   0% /sys/fs/cgroup
+/dev/sda1                497M  124M  373M  25% /boot
+tmpfs                    1.6G     0  1.6G   0% /run/user/0
+/dev/sdc1                100G   33M  100G   1% /deploydata
+```
+
+> 我们选择/deploydata 目录作为 离线安装包的存储目录
+
+
 
 ## 离线安装包
 
