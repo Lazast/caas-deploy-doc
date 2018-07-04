@@ -8,9 +8,5 @@
 
 ## software requirements
 
-
-
-Next: [Prerequistites](/Prerequistes.md)
-
-
+Next: [host roles](https://legacy.gitbook.com/book/jiulongzaitian/caas/edit#)
 

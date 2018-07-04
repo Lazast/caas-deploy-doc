@@ -2,8 +2,8 @@
 
 * [Introduction](README.md)
 * [requirements](requirements.md)
-* [Prerequisites](Prerequistes.md)
 * [host roles](host-role.md)
+* [Prerequisites](Prerequistes.md)
 * [docker](docker.md)
 * [keepalived&haproxy](keepalivedandhaproxy.md)
 * [ldap](ldap.md)
