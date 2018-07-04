@@ -10,3 +10,7 @@
 
 
 
+Next: [openshift node](/openshift-node.md)
+
+
+

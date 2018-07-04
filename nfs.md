@@ -10,3 +10,7 @@ nfs 安装
 
 
 
+Next: [openshift master](/openshift-master.md)
+
+
+

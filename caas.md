@@ -10,3 +10,5 @@ caas portal等相关安装
 
 
 
+Next: [smoke test](/smoke-test.md)
+
