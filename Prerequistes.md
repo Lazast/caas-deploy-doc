@@ -156,19 +156,12 @@ cd $offlinedata/caas-offline
 mkdir install
 cd  install
 
-env |grep CAAS_HOST_MASTER |awk -F '=' '{print $2}' > /tmp/masters
-host_nodes=$(env |grep CAAS_HOST_NODE |awk -F '=' '{print $2}')
-
-cat > /tmp/nodes << EOF
-EOF
-
-for i in $host_nodes; do
-  echo $i >> /tmp/nodes
-done
+env |grep CAAS_HOST_MASTER |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" hostname="arrays[3]}}' > /tmp/masters
+env |grep CAAS_HOST_NODE |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" hostname="arrays[3]}}' > /tmp/nodes
 
 
-env |grep CAAS_HOST_LB |awk -F '=' '{print $2}' > /tmp/lbs
-env |grep CAAS_HOST_STORAGE |awk -F '=' '{print $2}' > /tmp/storage
+env |grep CAAS_HOST_LB |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" hostname="arrays[3]}}' > /tmp/lbs
+env |grep CAAS_HOST_STORAGE |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" hostname="arrays[3]}}' > /tmp/storage
 
 cat > ansible_hosts <<EOF
 
