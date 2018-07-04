@@ -36,7 +36,7 @@ for h in $hosts; do
 done
 
 for h in $hosts; do
-    
+
     ssh root@$h "  sed -i '/^\.\ ~\/\.bash_caas_env/d' ~/.bashrc  ; echo \". ~/.bash_caas_env\" >> ~/.bashrc"
 
 done
@@ -128,7 +128,11 @@ nohup python -m SimpleHTTPServer 38888 &
 iptables -I INPUT -p tcp  --dport 38888 -j ACCEPT
 ```
 
-## 
+
+
+# 配置yum 源
+
+
 
 ## 
 
