@@ -6,6 +6,8 @@
 
 ## hardware requirements
 
+
+
 ## software requirements
 
 
