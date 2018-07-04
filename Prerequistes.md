@@ -171,15 +171,18 @@ env |grep CAAS_HOST_LB |awk -F '=' '{print $2}' > /tmp/lbs
 env |grep CAAS_HOST_STORAGE |awk -F '=' '{print $2}' > /tmp/storage
 
 cat > ansible_hosts <<EOF
+
+[dockers]
+masters
+nodes
+storages
+
 [masters]
 $(cat /tmp/masters)
-
 [nodes]
 $(cat /tmp/nodes)
-
 [lbs]
 $(cat /tmp/lbs)
-
 [storages]
 $(cat /tmp/storage)
 
