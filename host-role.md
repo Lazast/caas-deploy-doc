@@ -60,7 +60,7 @@ CAAS_VIP_MYSQL_LDAP=10.74.248.254
 
 ```bash
 {
-
+#
 cat > ~/.bash_caas_env <<EOF
 # master1 IP
 export CAAS_HOST_MASTER1=10.74.248.241
