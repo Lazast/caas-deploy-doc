@@ -149,9 +149,25 @@ baseurl=http://$CAAS_HOST_MASTER1:38888/
 EOF
 ```
 
-## 
+> 配置ansible 配置文件
 
-## 
+```
+cd $offlinedata/caas-offline
+mkdir install
+cd  install
+
+env |grep CAAS_HOST_MASTER |awk -F '=' '{print $2}' > /tmp/masters
+env |grep CAAS_HOST_NODE |awk -F '=' '{print $2}' > /tmp/nodes
+env |grep CAAS_HOST_LB |awk -F '=' '{print $2}' > /tmp/lb
+env |grep CAAS_HOST_STORAGE |awk -F '=' '{print $2}' > /tmp/storage
+
+cat > ansible_hosts <<EOF
+[masters]
+$(cat /tmp/masters )
+
+
+EOF
+```
 
 ## 
 
