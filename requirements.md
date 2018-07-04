@@ -8,5 +8,9 @@
 
 ## software requirements
 
+centos 7.2
+
+
+
 Next: [host roles](https://legacy.gitbook.com/book/jiulongzaitian/caas/edit#)
 
