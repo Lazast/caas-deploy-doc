@@ -8,12 +8,6 @@
 
 ## 架构图
 
-
-
-
-
-
-
 ## Labs
 
 本教程建议使用centos7 环境
@@ -22,6 +16,8 @@
 
 * 1
 * 2
+
+Next: [requirements](/requirements.md)
 
 
 

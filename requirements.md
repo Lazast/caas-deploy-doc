@@ -6,9 +6,11 @@
 
 ## hardware requirements
 
-
-
 ## software requirements
+
+
+
+Next: [Prerequistites](/Prerequistes.md)
 
 
 
