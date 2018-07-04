@@ -34,10 +34,6 @@ MASTER1_BUSSINESS_INTERFACE=
 
 #master1 存储网卡名称
 MASTER1_STORAGE_INTERFACE=
-
-
-
-
 ```
 
 ## node
@@ -58,5 +54,5 @@ IP 信息， 要设置为变量
 
 
 
-Next:   \*\*\*\*\*\*  下一页链接
+Next:  [docker](/docker.md)
 
