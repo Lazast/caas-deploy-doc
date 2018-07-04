@@ -61,7 +61,7 @@ CAAS_MYSQL_LDAP_VIP=10.74.248.254
 ```bash
 {
 
-cat > ~/bash_caas_env <<EOF
+cat > ~/.bash_caas_env <<EOF
 # master1 IP
 CAAS_MASTER1=10.74.248.241
 # master2 IP
@@ -118,6 +118,9 @@ CAAS_NODE20=
 
 
 EOF
+
+
+echo ". ~/.bash_caas_env" >> ~/.bashrc
 }
 ```
 
