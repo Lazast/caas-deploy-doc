@@ -124,7 +124,9 @@ nohup python -m SimpleHTTPServer 38888 &
 iptables -I INPUT -p tcp  --dport 38888 -j ACCEPT
 ```
 
-# 配置yum 源
+# 
+
+# master1配置ansible
 
 ## 
 
