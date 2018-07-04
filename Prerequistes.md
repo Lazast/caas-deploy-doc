@@ -55,7 +55,7 @@ tmpfs                    1.6G     0  1.6G   0% /run/user/0
 /dev/sdc1                100G   33M  100G   1% /deploydata
 ```
 
-> 请执行以下命令
+> 请执行以下命令 获得&gt;50G 的分区目录
 
 ```
 {
@@ -65,17 +65,27 @@ if [ "$validdata" == "" ]; then
    echo "没有找到>50G的分区，无法执行后续的操作，请联系相关人员 ..."
 else
    echo "找到>50G的分区目录: $validdata"
-   offlinedata="$validdata/caas"
+   export offlinedata="$validdata/caas"
    mkdir -p $offlinedata
    cd  $offlinedata
 fi
 
 
+}
+```
+
+> 进入离线目录
+
+```
+{
+cd $offlinedata
 
 }
 ```
 
-> 我们选择/deploydata 目录作为 离线安装包的存储目录
+
+
+
 
 ## 离线安装包
 
