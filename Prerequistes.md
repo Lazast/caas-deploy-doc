@@ -190,9 +190,11 @@ $(cat /tmp/storage)
 EOF
 ```
 
-## 
+> 安装ansible
 
-## 
+```
+yum install ansible -y
+```
 
 ## 
 
