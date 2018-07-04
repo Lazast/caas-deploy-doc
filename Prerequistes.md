@@ -63,29 +63,47 @@ validdata=$(df -m |sed 1d |sort -rn -k2 |awk '{if($2>50000) print $6}'  | head -
 echo $validdata
 if [ "$validdata" == "" ]; then
    echo "没有找到>50G的分区，无法执行后续的操作，请联系相关人员 ..."
+   exit 1
 else
    echo "找到>50G的分区目录: $validdata"
-   export offlinedata="$validdata/caas"
+   offlinedata=$validdata
+   echo "offlinedata=$validdata" >> ~/.bashrc
    mkdir -p $offlinedata
-   cd  $offlinedata
+   exit 1
 fi
 
 
 }
 ```
 
-> 进入离线目录
+> 将本地caas-offline.tar 文件scp 到 CAAS\_MASTER1 机器
 
 ```
 {
-cd $offlinedata
+scp ./caas-offline.tar root@${CAAS_MASTER1}:~
 
 }
 ```
 
+> 重新登录CAAS\_MASTER1机器
+
+```
+{
+# 重新登录CAAS_MASTER1
+ssh root@${CAAS_MASTER1}
+}
+```
+
+> 解压离线文件
+
+```
+tar xvf ~/caas-offline.tar -C $offlinedata
+
+cd $offlinedata/caas-offline
 
 
 
+```
 
 ## 离线安装包
 
