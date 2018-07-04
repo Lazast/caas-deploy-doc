@@ -158,12 +158,21 @@ cd  install
 
 env |grep CAAS_HOST_MASTER |awk -F '=' '{print $2}' > /tmp/masters
 env |grep CAAS_HOST_NODE |awk -F '=' '{print $2}' > /tmp/nodes
-env |grep CAAS_HOST_LB |awk -F '=' '{print $2}' > /tmp/lb
+env |grep CAAS_HOST_LB |awk -F '=' '{print $2}' > /tmp/lbs
 env |grep CAAS_HOST_STORAGE |awk -F '=' '{print $2}' > /tmp/storage
 
 cat > ansible_hosts <<EOF
 [masters]
 $(cat /tmp/masters )
+
+[nodes]
+$(cat /tmp/nodes)
+
+[lbs]
+$(cat /tmp/lbs)
+
+[storages]
+$(cat /tmp/storage)
 
 
 EOF
