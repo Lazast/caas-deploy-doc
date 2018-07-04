@@ -37,9 +37,7 @@ ssh root@${CAAS_MASTER1}
 ## 配置离线安装包
 
 > 在CAAS\_MASTER1 上 ，找一块分区，分区大小必须 &gt; 50G， 若没有大于50G的分区，请联系客户或相关人员，增加盘或者划分去
-
-
-
+>
 > 分区查看命令  （Avail）
 
 ```
@@ -69,6 +67,7 @@ else
    echo "找到>50G的分区目录: $validdata"
    offlinedata="$validdata/caas"
    mkdir -p $offlinedata
+   cd  $offlinedata
 fi
 
 
