@@ -4,29 +4,30 @@
 
 安装caas 平台提前需要准备的工具
 
+# 免密登录
+
+> 本地主机行执行如下命令,对所有主机免密登录
+
+```
+hosts=$(env |grep CAAS_HOST_ |awk -F '=' '{print $2}')
+
+if [ ! -f ~/.ssh/id_rsa.pub ]; then
+
+    ssh-keygen -t rsa -b 1024 -C "root"
+
+fi
+
+for h in $hosts; do
+
+    ssh-copy-id root@$h
+    
+done
+
+```
+
+
+
 # 安装离线包
-
-## 对MASTER1免密登陆
-
-配置部署者本地机器，对 CAAS\_MASTER1  机器的ssh 免密登陆，要求本地机器是linux 环境
-
-> 命令如下:
-
-```
-{
-   #CAAS_MASTER1 的值 在上一篇文章中已经设置，查找相关的值，取代***
-   CAAS_MASTER1=***
-
-   ssh-keygen -t rsa -b 1024 -C "root"
-
-   # 各种回车
-
-
-   ssh-copy-id root@${CAAS_MASTER1}
-
-
-}
-```
 
 ## 登陆CAAS\_MASTER1
 
@@ -110,8 +111,6 @@ nohup python -m SimpleHTTPServer 38888 &
 
 # 配置iptables 规则，其实能访问
 iptables -I INPUT -p tcp  --dport 38888 -j ACCEPT
-
-
 ```
 
 ## 
