@@ -4,11 +4,7 @@
 
 安装caas 平台提前需要准备的工具
 
-
-
 # 安装离线包
-
-
 
 ## 对MASTER1免密登陆
 
@@ -114,6 +110,8 @@ nohup python -m SimpleHTTPServer 38888 &
 
 # 配置iptables 规则，其实能访问
 iptables -I INPUT -p tcp  --dport 38888 -j ACCEPT
+
+
 ```
 
 ## 
