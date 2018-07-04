@@ -36,8 +36,8 @@ for h in $hosts; do
 done
 
 for h in $hosts; do
-
-    ssh root@$h "echo \". ~/.bash_caas_env\" >> ~/.bashrc"
+    
+    ssh root@$h "  sed -i '/^\.\ ~\/\.bash_caas_env/d' ~/.bashrc  ; echo \". ~/.bash_caas_env\" >> ~/.bashrc"
 
 done
 ```
