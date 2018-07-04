@@ -163,7 +163,7 @@ env |grep CAAS_HOST_STORAGE |awk -F '=' '{print $2}' > /tmp/storage
 
 cat > ansible_hosts <<EOF
 [masters]
-$(cat /tmp/masters )
+$(cat /tmp/masters)
 
 [nodes]
 $(cat /tmp/nodes)
