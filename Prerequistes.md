@@ -174,7 +174,6 @@ $(cat /tmp/lbs)
 [storages]
 $(cat /tmp/storage)
 
-
 EOF
 ```
 
