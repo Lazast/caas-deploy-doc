@@ -121,6 +121,8 @@ EOF
 
 
 echo ". ~/.bash_caas_env" >> ~/.bashrc
+source ~/.bashrc
+
 }
 ```
 
