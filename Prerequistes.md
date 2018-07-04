@@ -20,12 +20,17 @@ fi
 for h in $hosts; do
 
     ssh-copy-id root@$h
-    
+
 done
 
+for h in $hosts; do
+
+    scp ~/.bash_caas_env root@$h:~
+
+done
+
+
 ```
-
-
 
 # 安装离线包
 
