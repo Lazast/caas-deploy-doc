@@ -111,8 +111,7 @@ vgcreate  vg-paas /dev/sdb1 /dev/xxx（按照实际磁盘数量和策略决定�
 mkdir /nfs
 ```
 
-
-### 安装配置docker
+## 安装配置docker
 
 ```
 cat > prepare.yaml << EOF
@@ -155,13 +154,9 @@ cat > prepare.yaml << EOF
   tasks:
     - name: enable and start docker
       service: name=docker state=started enabled=yes
-      
+
 EOF
-
-
 ```
-
-
 
 Next:  [ldap](/ldap.md)
 
