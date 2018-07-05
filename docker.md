@@ -18,17 +18,11 @@ source ~/.bash_caas_env
 env |grep CAAS_HOST_MASTER  |awk -F '=' '{print $2}'
 ```
 
-1
+需要一个磁盘或分区用于创建docker-vg
 
+需要一个块设备用于创建os的分区，之后格式化后挂载到/var/lib/origin/openshift.local.volumes
 
-
-1
-
-1
-
-1
-
-
+需要一个块设备格式化后做数据目录，存放os相关数据
 
 ### 
 
@@ -44,15 +38,11 @@ source ~/.bash_caas_env
 env |grep CAAS_HOST_NODE  |awk -F '=' '{print $2}'
 ```
 
-1
+需要一个磁盘或分区用于创建docker-vg
 
+需要一个块设备用于创建os的分区，之后格式化后挂载到/var/lib/origin/openshift.local.volumes
 
-
-1
-
-1
-
-1
+需要一个块设备格式化后做数据目录，存放os相关数据
 
 ### 存储  配置
 
@@ -64,15 +54,11 @@ source ~/.bash_caas_env
 env |grep CAAS_HOST_STORAGE  |awk -F '=' '{print $2}'
 ```
 
-1
+需要一个磁盘或分区创建用于NFS使用的vg
+
+需要一个块设备格式化后存放harbor、mysql、ldap相关数据。
 
 
-
-1
-
-1
-
-1
 
 ### 负载均衡 配置
 
@@ -84,21 +70,13 @@ source ~/.bash_caas_env
 env |grep CAAS_HOST_LB  |awk -F '=' '{print $2}'
 ```
 
-
-
-1
-
-
-
 1
 
 1
 
 1
 
-
-
-
+1
 
 \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 
