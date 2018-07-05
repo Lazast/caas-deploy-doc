@@ -11,30 +11,15 @@
 ```
 source ~/.bash_caas_env
 
-hosts=$(env |grep CAAS_HOST_ |awk -F '=' '{print $2}')
+env |grep CAAS_HOST_ |awk -F '=' '{print $2}'
 
-echo $hosts
 ```
 
-> 注意，如果您有iterm 可以使用iterm 的终端广播功能，如果没有，则执行下面的命令
+> 注意，如果您有iterm 可以使用iterm 的终端广播功能
 >
-> 下面的命令 会使用for 循环 顺序ssh 到每个host 上，直到 您输入 exit 命令，会退出当前的ssh 链接，进入下一个主机的ssh 链接， 这样我们就可以一直执行后续的docker 配置操作
-
-```
-for i in $hosts; do
-
-ssh root@$i
-
-done
-```
-
-> 接下来的每一次ssh 操作都会进入特定的主机，都要执行下面的命令
+> 接下来 要顺序ssh登陆所有的打印出来的主机 ,都要执行后续的命令
 
 ## 特定一台主机的docker 配置
-
-
-
-
 
 ## 验证
 
