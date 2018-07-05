@@ -241,5 +241,13 @@ echo ". ~/.bash_caas_env" >> ~/.bashrc
 source ~/.bashrc
 ```
 
+> copy 环境变量 文件 到  master1
+
+```
+scp ~/.bash_caas_env root@$CAAS_HOST_MASTER1:~
+ssh root@$CAAS_HOST_MASTER1 "sed -i '/^\.\ ~\/\.bash_caas_env/d' ~/.bashrc"
+ssh root@$CAAS_HOST_MASTER1 "echo '. ~/.bash_caas_env' >> ~/.bashrc"
+```
+
 Next:  [Prerequistites](https://legacy.gitbook.com/book/jiulongzaitian/caas/edit#)
 
