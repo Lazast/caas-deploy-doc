@@ -126,19 +126,15 @@ cd  install
 
 env |grep CAAS_HOST_MASTER |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" hostname="arrays[3]}}' > /tmp/masters
 env |grep CAAS_HOST_NODE |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" hostname="arrays[3]}}' > /tmp/nodes
-
-
 env |grep CAAS_HOST_LB |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" hostname="arrays[3]}}' > /tmp/lbs
 env |grep CAAS_HOST_STORAGE |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" hostname="arrays[3]}}' > /tmp/storage
 
 cat > ansible_hosts <<EOF
-
 [dockers]
 masters
 nodes
 storages
 lbs
-
 [masters]
 $(cat /tmp/masters)
 [nodes]
@@ -147,7 +143,6 @@ $(cat /tmp/nodes)
 $(cat /tmp/lbs)
 [storages]
 $(cat /tmp/storage)
-
 EOF
 ```
 
