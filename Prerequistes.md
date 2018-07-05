@@ -110,10 +110,9 @@ fi
 
 for h in $hosts; do
     ssh-copy-id root@$h
+    # 注意 这里会让用户输入 yes 和用户名 密码
 done
 ```
-
-
 
 > 配置本地yum 源
 
