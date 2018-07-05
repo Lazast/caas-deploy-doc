@@ -112,6 +112,9 @@ cat > caas.repo << EOF
 name=caas-offline-local
 failovermethod=priority
 baseurl=http://$CAAS_HOST_MASTER1:38888/
+#mirrorlist=http://mirrorlist.centos.org/?release=&arch=&repo=os
+gpgcheck=0
+#gpgkey=http://mirrors.haihangyun.com/centos/RPM-GPG-KEY-CentOS-7
 EOF
 
 cp caas.repo /tmp/caas.repo
