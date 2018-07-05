@@ -18,7 +18,7 @@ source ~/.bash_caas_env
 env |grep CAAS_HOST_MASTER  |awk -F '=' '{print $2}'
 ```
 
-需要一个磁盘或分区用于创建docker-vg
+需要一个磁盘或分区用于创建 docker-vg
 
 需要一个块设备用于创建os的分区，之后格式化后挂载到/var/lib/origin/openshift.local.volumes
 
@@ -67,8 +67,6 @@ source ~/.bash_caas_env
 
 env |grep CAAS_HOST_LB  |awk -F '=' '{print $2}'
 ```
-
-
 
 \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 
