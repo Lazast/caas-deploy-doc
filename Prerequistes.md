@@ -219,7 +219,17 @@ cat > prepare.yaml << EOF
 EOF
 
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./prepare.yaml
+
+
 ```
+
+> 退出 master1 主机，执行命令
+
+```
+exit
+```
+
+
 
 Next:  [docker](/docker.md)[ ](/host-role.md)
 
