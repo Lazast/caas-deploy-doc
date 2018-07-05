@@ -111,7 +111,54 @@ vgcreate  vg-paas /dev/sdb1 /dev/xxx（按照实际磁盘数量和策略决定�
 mkdir /nfs
 ```
 
-### 
+> ### 安装配置docker
+
+```
+cat > prepare.yaml << EOF
+
+---
+- hosts: all
+  tasks:
+    - name: install docker
+      yum: name=docker state=installed
+      run_once: true
+
+---
+- hosts: masters,nodes
+  tasks:
+    - name: docker storage setup
+      shell: echo "VG=docker-vg" > /etc/sysconfig/docker-storage-setup
+      run_once: true
+    - name: docker storage setup
+      shell: docker-storage-setup
+
+---
+- hosts: storages
+  tasks:
+    - name: install docker-compose
+      yum: name=docker-compose  state=installed
+      run_once: true
+    - name: unset default docker OPTIONS
+      shell: sed -i 's/^OPTIONS/#OPTIONS/' /etc/sysconfig/docker
+      run_once: true
+    - name: set OPTIONS
+      shell: echo "OPTIONS='--selinux-enabled --log-driver=journald --signature-verification=false' --registry-mirror=https://registry.docker-cn.com" >> /etc/sysconfig/docker
+      run_once: true
+    - name: add insecure registry
+      shell: echo "INSECURE_REGISTRY='--insecure-registry $CAAS_DOMAIN_HARBOR'" >> /etc/sysconfig/docker
+      run_once: true
+
+
+---
+- hosts: all
+  tasks:
+    - name: enable and start docker
+      service: name=docker state=started enabled=yes
+      
+EOF
+
+
+```
 
 Next:  [ldap](/ldap.md)
 
