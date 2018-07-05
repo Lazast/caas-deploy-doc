@@ -211,7 +211,7 @@ cat > prepare.yaml << EOF
       run_once: true
 
     - name: set host names
-      shell: hostnamectl {{ hostname }}
+      shell: hostnamectl set-hostname {{ hostname }}
 
     - name: install docker
       yum: name=docker state=installed
