@@ -99,6 +99,22 @@ iptables -I INPUT -p tcp  --dport 38888 -j ACCEPT
 
 # master1配置ansible
 
+> 配置master1 到其他主机免密登陆
+
+```bash
+hosts=$(env |grep CAAS_HOST_ |awk -F '=' '{print $2}')
+
+if [ ! -f ~/.ssh/id_rsa.pub ]; then
+    ssh-keygen -t rsa -b 1024 -C "root"
+fi
+
+for h in $hosts; do
+    ssh-copy-id root@$h
+done
+```
+
+
+
 > 配置本地yum 源
 
 ```bash
