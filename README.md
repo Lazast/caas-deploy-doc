@@ -16,12 +16,22 @@
 
 本教程建议使用centos7 环境
 
-# 实例
+# 目录
+
+* [requirements](/requirements.md)
+* [host roles](/host-role.md)
+* [Prerequisites](/Prerequistes.md)
+* [docker](/docker.md)
+* [keepalived&haproxy](/keepalivedandhaproxy.md)
+* [ldap](/ldap.md)
+* [harbor](/harbor.md)
+* [nfs](/nfs.md)
+* [openshift master](/openshift-master.md)
+* [openshift node](/openshift-node.md)
+* [caas](/caas.md)
+* [smoke test](/smoke-test.md)
 
 ---
-
-* 1
-* 2
 
 Next: [requirements](/requirements.md)
 
