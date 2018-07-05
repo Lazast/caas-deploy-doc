@@ -22,7 +22,7 @@
 * [host roles](/host-role.md)
 * [Prerequisites](/Prerequistes.md)
 * [docker](/docker.md)
-* [keepalived&haproxy](/keepalivedandhaproxy.md)
+
 * [ldap](/ldap.md)
 * [harbor](/harbor.md)
 * [nfs](/nfs.md)

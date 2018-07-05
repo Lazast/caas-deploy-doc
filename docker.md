@@ -70,8 +70,6 @@ source ~/.bash_caas_env
 env |grep CAAS_HOST_STORAGE  |awk -F '=' '{print $2}'
 ```
 
-
-
 ssh 登陆每台存储 主机， 输入下面命令 查看磁盘 和块设备
 
 ```
@@ -101,14 +99,12 @@ sr0              11:0    1 1024M  0 rom
 > 如果有两个盘，一个盘给NFS 另一个给数据盘
 >
 > NFS分区不需要挂载目录
-
+>
 > 数据分区 （需要格式化 使用  mkfs.xfs 格式化 ）需要挂载到 /caas\_data/， 使用mount  -t xfs  命令
 >
 > 最后修改 /etc/fstab 文件，添加开机挂载目录，将 数据分区设置为开机自动挂载
 >
 > 假设给NFS 使用的分区为 /dev/sdb1, 请执行下面命令 ，创建vg
-
-
 
 ```
 vgcreate  vg-paas /dev/sdb1 /dev/xxx（按照实际磁盘数量和策略决定）
@@ -117,5 +113,5 @@ mkdir /nfs
 
 ### 
 
-Next:  [keepalived & haproxy](/keepalivedandhaproxy.md)
+Next:  [ldap](/ldap.md)
 
