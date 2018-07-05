@@ -2,9 +2,9 @@
 
 ---
 
-## 安装步骤
-
 ldap 安装
+
+## 安装步骤
 
 ```
 cat > ldap.yaml << EOF
