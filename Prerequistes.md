@@ -168,10 +168,8 @@ env |grep CAAS_HOST_STORAGE |awk -F '=' '{if ($2!="") { split(tolower($1),arrays
 ```
 ls
 
-# ansible_hosts  extra_hosts playbook
+# ansible_hosts  extra_hosts 
 ```
-
-
 
 > 安装ansible
 
@@ -179,13 +177,38 @@ ls
 yum install ansible -y
 ```
 
-> 执行ansible 命令
+> 生成ansible 配置文件， 执行ansible 命令
 
 ```
-ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./playbook/prepare.yaml
+cat > prepare.yaml << EOF
+
+---
+- hosts: all
+  tasks:
+    - name: bak prepare yum repo - dir create
+      file: path=/etc/yum.repos.d/caas_bak state=directory
+    - name: bak prepare yum repo - bak repo
+      shell: mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/caas_bak/
+    - name: copy caas repo to all host
+      copy: src=/etc/yum.repos.d/caas.repo dest=/etc/yum.repos.d/ force=true
+    - name: yum update
+      shell: yum clean all && yum makecache
+
+    - name: copy caas host resolve to all hosts
+      copy: src=../extra_hosts dest=/tmp/extra_hosts force=true
+    - name: add extra host
+      shell: echo /tmp/extra_hosts >> /etc/hosts
+
+    - name: set host names
+      shell: hostnamectl {{ hostname }}
+
+    - name: install docker
+      yum: name=docker state=installed
+
+EOF
+
+ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./prepare.yaml
 ```
-
-
 
 Next:  [docker](/docker.md)[ ](/host-role.md)
 
