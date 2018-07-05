@@ -81,6 +81,22 @@ CAAS_VIP_LOADBALANCE=10.74.248.253
 CAAS_VIP_MYSQL_LDAP=10.74.248.254
 ```
 
+## 域名
+
+> 请在本机linux 终端中输入，具体地址以当前实际情况为准，具体泛域名后缀\(example.com\)以实际情况为准
+
+```
+CAAS_DOMAIN_LDAP=ldap.caas.example.com
+CAAS_DOMAIN_HARBOR=harbor.caas.example.com
+CAAS_DOMAIN_OS_CONSOLE=os-console.caas.example.com
+CAAS_DOMAIN_ALERT=alertmanager.caas.example.com
+CAAS_DOMAIN_PROM=prometheus.caas.example.com
+CAAS_DOMAIN_GRAFANA=grafana.caas.example.com
+CAAS_DOMAIN_ES=es.caas.example.com
+CAAS_DOMAIN_PORTAL=portal.caas.example.com
+CAAS_DOMAIN_PORTAL_API=portalapi.caas.example.com
+```
+
 ## 生成环境变量
 
 > 环境变量的值需要根据特定现场情况去设置
@@ -135,6 +151,18 @@ export CAAS_HOST_NODE6=${CAAS_HOST_NODE6}
 export CAAS_HOST_NODE7=${CAAS_HOST_NODE7}
 export CAAS_HOST_NODE8=${CAAS_HOST_NODE8}
 export CAAS_HOST_NODE9=${CAAS_HOST_NODE9}
+
+# 域名
+export CAAS_DOMAIN_LDAP=${CAAS_DOMAIN_LDAP}
+export CAAS_DOMAIN_HARBOR=${CAAS_DOMAIN_HARBOR}
+export CAAS_DOMAIN_OS_CONSOLE=${CAAS_DOMAIN_OS_CONSOLE}
+export CAAS_DOMAIN_ALERT=${CAAS_DOMAIN_ALERT}
+export CAAS_DOMAIN_PROM=${CAAS_DOMAIN_PROM}
+export CAAS_DOMAIN_GRAFANA=${CAAS_DOMAIN_GRAFANA}
+export CAAS_DOMAIN_ES=${CAAS_DOMAIN_ES}
+export CAAS_DOMAIN_PORTAL=${CAAS_DOMAIN_PORTAL}
+export CAAS_DOMAIN_PORTAL_API=${CAAS_DOMAIN_PORTAL_API}
+
 
 
 EOF

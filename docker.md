@@ -58,8 +58,6 @@ env |grep CAAS_HOST_STORAGE  |awk -F '=' '{print $2}'
 
 需要一个块设备格式化后存放harbor、mysql、ldap相关数据。
 
-
-
 ### 负载均衡 配置
 
 在本地主机终端上，执行下面的命令， 获得所有负载均衡 节点列表
@@ -70,13 +68,7 @@ source ~/.bash_caas_env
 env |grep CAAS_HOST_LB  |awk -F '=' '{print $2}'
 ```
 
-1
 
-1
-
-1
-
-1
 
 \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 
