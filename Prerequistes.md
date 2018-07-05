@@ -148,7 +148,7 @@ env |grep CAAS_HOST_LB |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"
 env |grep CAAS_HOST_STORAGE |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" hostname="arrays[3]}}' > /tmp/storage
 
 cat > ansible_hosts <<EOF
-[dockers]
+[dockers:children]
 masters
 nodes
 storages
