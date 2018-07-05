@@ -110,7 +110,7 @@ ssh root@${CAAS_HOST_MASTER1}
 
 > 解压离线文件
 
-```
+```bash
 tar xvf ~/caas-offline.tar -C $offlinedata
 
 cd $offlinedata/caas-offline/cent7.2
@@ -130,7 +130,7 @@ iptables -I INPUT -p tcp  --dport 38888 -j ACCEPT
 
 > 配置本地yum 源
 
-```
+```bash
 cd /etc/yum.repos.d
 mkdir back
 mv *.repo back/
@@ -151,7 +151,7 @@ EOF
 
 > 配置ansible 配置文件
 
-```
+```bash
 cd $offlinedata/caas-offline
 mkdir install
 cd  install
@@ -185,7 +185,7 @@ EOF
 
 > 安装ansible
 
-```
+```bash
 yum install ansible -y
 ```
 
