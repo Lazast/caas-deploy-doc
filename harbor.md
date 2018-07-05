@@ -179,6 +179,30 @@ web_url = $CAAS_DOMAIN_PORTAL_API
 EOF
 ```
 
+> 安装harbor
+
+```
+cat > harbor.yaml << EOF
+
+---
+- hosts: storages
+  tasks:
+    - name: harbor dir create
+      file: path=/caas_data/harbor_data state=directory
+    - name: unarchive harbor-offline-installer-stage config
+      unarchive: src=../images/harbor/harbor-offline-installer-stage.tgz  dest=/opt/
+    - name: unarchive clair-db-fetched
+      unarchive: src=../images/harbor/clair-db-fetched.gz dest=/caas_data/harbor_data/
+    - name: copy harbor config
+      copy: src=./harbor.cfg dest=/opt/harbor/ force=true
+    - name: install harbor 
+      shell: /opt/harbor/install.sh --with-clair
+
+EOF
+
+ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./harbor.yaml
+```
+
 ## 验证
 
 Next: [nfs](/nfs.md)
