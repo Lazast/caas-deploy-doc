@@ -195,6 +195,7 @@ cat > prepare.yaml << EOF
       copy: src=../extra_hosts dest=/tmp/extra_hosts force=true
     - name: add extra host
       shell: cat /tmp/extra_hosts >> /etc/hosts
+      run_once: true
 
     - name: set host names
       shell: hostnamectl {{ hostname }}
