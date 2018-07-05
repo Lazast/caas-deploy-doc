@@ -113,7 +113,15 @@ mkdir /nfs
 
 ## 安装配置docker
 
+#### 登陆CAAS\_MASTER1
+
+```bash
+ssh root@${CAAS_HOST_MASTER1}
 ```
+
+```
+cd $offlinedata/caas-offline/install/
+
 cat > docker.yaml << EOF
 
 ---
@@ -154,7 +162,7 @@ cat > docker.yaml << EOF
   tasks:
     - name: enable and start docker
       service: name=docker state=started enabled=yes
-      
+
 
 EOF
 
