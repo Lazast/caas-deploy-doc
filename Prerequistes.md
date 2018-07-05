@@ -15,6 +15,12 @@ if [ ! -f ~/.ssh/id_rsa.pub ]; then
     ssh-keygen -t rsa -b 1024 -C "root"
 fi
 
+
+```
+
+> copy 秘钥
+
+```
 for h in $hosts; do
     ssh-copy-id root@$h
 done
