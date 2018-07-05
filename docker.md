@@ -42,14 +42,18 @@ sdc               8:32   0  100G  0 disk
 sr0              11:0    1 1024M  0 rom
 ```
 
+> 注意，需要分区的服务 有docker，openshift，（prometheus,  es 组件服务\)。
+>
+> 容量需求 从大大小排列： docker -&gt;
+
+
+
 > 我们需要找到一个磁盘或者分区大于100G用于docker生产环境的direct-lvm存储配置，使用如下命令创建docker-vg
 
 ```
   pvcreate /dev/sdb
   vgcreate docker-vg /dev/sdb
 ```
-
-
 
 ## 验证
 
