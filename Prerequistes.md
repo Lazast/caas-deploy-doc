@@ -213,8 +213,21 @@ cat > prepare.yaml << EOF
     - name: set host names
       shell: hostnamectl set-hostname {{ hostname }}
 
-    - name: install docker
-      yum: name=docker state=installed
+    - name: disable firewalld
+      service: name=firewalld state=stopped enabled=no
+
+---
+- hosts: storages
+  tasks:
+    - name: Disable selinux
+      shell: setenforce 0
+      register: result
+      failed_when: "result.rc != 0 and 'SELinux is disabled' not in result.stderr"
+    - name: Disable selinux Persist
+      shell: echo "SELINUX=disabled" > /etc/selinux/config
+    - name: Disable selinux Persist
+      shell: echo "SELINUXTYPE=targeted" >> /etc/selinux/config
+
 
 EOF
 
