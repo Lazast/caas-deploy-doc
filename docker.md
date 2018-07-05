@@ -154,6 +154,7 @@ cat > docker.yaml << EOF
   tasks:
     - name: enable and start docker
       service: name=docker state=started enabled=yes
+      
 
 EOF
 
