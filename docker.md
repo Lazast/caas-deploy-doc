@@ -18,15 +18,48 @@ source ~/.bash_caas_env
 env |grep CAAS_HOST_MASTER  |awk -F '=' '{print $2}'
 ```
 
-需要一个磁盘或分区用于创建 docker-vg
+> ssh 登陆每台master 主机， 输入下面命令 查看磁盘 和块设备
 
-需要一个块设备用于创建os的分区，之后格式化后挂载到/var/lib/origin/openshift.local.volumes
+```
+lsblk -a
+```
 
-需要一个块设备格式化后做数据目录，存放os相关数据
+> 输出内容如下
 
-### 
+```
+# 下面的为输出内容
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   40G  0 disk
+├─sda1            8:1    0  500M  0 part /boot
+└─sda2            8:2    0 39.5G  0 part
+  ├─centos-root 253:0    0 35.6G  0 lvm  /
+  └─centos-swap 253:1    0  3.9G  0 lvm  [SWAP]
+sdb               8:16   0  100G  0 disk
+sdc               8:32   0  100G  0 disk
+└─sdc1            8:33   0  100G  0 part /deploydata
+sr0              11:0    1 1024M  0 rom
+```
 
-### 
+> 注意，需要分区的服务 有docker，openshift，（prometheus,  es 组件服务\)。
+>
+> 假设只有一个额外的数据盘 sdb，我们需要将此数据盘分为三个分区，分别给docker，openshift，和（数据盘），分区大小为3：3：4。 2T以下用fdisk 命令做分区， 2T以上用parted 命令做分区。
+>
+> docker 分区不需要挂载目录
+>
+> openshift 分区（需要格式化 使用  mkfs.xfs 命令格式化）需要挂载到  /var/lib/origin/openshift.local.volumes 目录,  使用mount -t xfs   命令
+>
+> 数据分区 （需要格式化 使用  mkfs.xfs 格式化 ）需要挂载到 /caas\_data/， 使用mount  -t xfs  命令
+>
+> 最后修改 /etc/fstab 文件，添加开机挂载目录，将openshift 和 数据分区设置为开机自动挂载
+
+> 假设给docker 使用的分区为 /dev/sdb1, 请执行下面命令 ，创建vg
+
+```
+  pvcreate /dev/sdb1
+  vgcreate docker-vg /dev/sdb1
+```
+
+
 
 ### node  配置
 
