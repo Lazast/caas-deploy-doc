@@ -203,8 +203,6 @@ EOF
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./harbor.yaml
 ```
 
-
-
 > harbor和ldap高可用，安装haproxy
 
 ```
@@ -250,8 +248,8 @@ listen mysql
 listen ldap
    bind :389
    mode tcp
-   server ldap1 10.70.94.93:389 check port 389 
-   server ldap2 10.70.94.99:389 check port 389 backup
+   server ldap1 10.70.94.93:3389 check port 3389 
+   server ldap2 10.70.94.99:3389 check port 3389 backup
 
 EOF
 ```
