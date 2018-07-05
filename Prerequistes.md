@@ -205,7 +205,6 @@ cat > prepare.yaml << EOF
 
 EOF
 
-
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./prepare.yaml
 ```
 
