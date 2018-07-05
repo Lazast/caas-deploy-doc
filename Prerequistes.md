@@ -12,30 +12,14 @@
 hosts=$(env |grep CAAS_HOST_ |awk -F '=' '{print $2}')
 
 if [ ! -f ~/.ssh/id_rsa.pub ]; then
-
     ssh-keygen -t rsa -b 1024 -C "root"
-
 fi
 
 for h in $hosts; do
-
     ssh-copy-id root@$h
-
 done
 
 
-#for h in $hosts; do
-
-#    scp ~/.bash_caas_env root@$h:~
-
-#done
-
-
-#for h in $hosts; do
-
-#    ssh root@$h "  sed -i '/^\.\ ~\/\.bash_caas_env/d' ~/.bashrc  ; echo \". ~/.bash_caas_env\" >> ~/.bashrc"
-
-#done
 ```
 
 # 安装离线包
@@ -43,9 +27,9 @@ done
 ## 登陆CAAS\_MASTER1
 
 ```bash
-{
+
 ssh root@${CAAS_HOST_MASTER1}
-}
+
 ```
 
 ## 配置离线安装包
@@ -72,7 +56,7 @@ tmpfs                    1.6G     0  1.6G   0% /run/user/0
 > 请执行以下命令 获得&gt;50G 的分区目录
 
 ```bash
-{
+
 validdata=$(df -m |sed 1d |sort -rn -k2 |awk '{if($2>50000) print $6}'  | head -1)
 echo $validdata
 if [ "$validdata" == "" ]; then
@@ -86,26 +70,23 @@ else
    exit 1
 fi
 
-
-}
 ```
 
 > 将本地caas-offline.tar 文件scp 到 CAAS\_MASTER1 机器
 
 ```bash
-{
+
 scp ./caas-offline.tar root@${CAAS_HOST_MASTER1}:~
 
-}
 ```
 
 > 重新登录CAAS\_MASTER1机器
 
 ```bash
-{
+
 # 重新登录CAAS_MASTER1
 ssh root@${CAAS_HOST_MASTER1}
-}
+
 ```
 
 > 解压离线文件
@@ -181,7 +162,20 @@ $(cat /tmp/lbs)
 $(cat /tmp/storage)
 
 EOF
+
+
 ```
+
+> 创建hosts 附加文件
+
+```bash
+env |grep CAAS_HOST_MASTER |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" "arrays[3]}}' > extra_hosts
+env |grep CAAS_HOST_NODE |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" "arrays[3]}}' >> extra_hosts
+env |grep CAAS_HOST_LB |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" "arrays[3]}}' >> extra_hosts
+env |grep CAAS_HOST_STORAGE |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" "arrays[3]}}' >> extra_hosts
+```
+
+
 
 > 安装ansible
 
@@ -189,7 +183,9 @@ EOF
 yum install ansible -y
 ```
 
-## 
+>
+
+
 
 Next:  [docker](/docker.md)[ ](/host-role.md)
 
