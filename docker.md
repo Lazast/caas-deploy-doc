@@ -8,8 +8,6 @@
 
 > docker 的配置和分区设置 ，不同的角色主机，有不同的配置，需要单独配置
 
-
-
 ### master  配置
 
 > 在本地主机终端上，执行下面的命令， 获得所有MASTER 节点列表
@@ -18,16 +16,23 @@
 source ~/.bash_caas_env
 
 env |grep CAAS_HOST_MASTER  |awk -F '=' '{print $2}'
-
 ```
 
+1
 
 
 
+1
+
+1
+
+1
 
 
 
+### 
 
+### 
 
 ### node  配置
 
@@ -37,12 +42,17 @@ env |grep CAAS_HOST_MASTER  |awk -F '=' '{print $2}'
 source ~/.bash_caas_env
 
 env |grep CAAS_HOST_NODE  |awk -F '=' '{print $2}'
-
 ```
 
+1
 
 
 
+1
+
+1
+
+1
 
 ### 存储  配置
 
@@ -52,12 +62,17 @@ env |grep CAAS_HOST_NODE  |awk -F '=' '{print $2}'
 source ~/.bash_caas_env
 
 env |grep CAAS_HOST_STORAGE  |awk -F '=' '{print $2}'
-
 ```
 
+1
 
 
 
+1
+
+1
+
+1
 
 ### 负载均衡 配置
 
@@ -67,22 +82,25 @@ env |grep CAAS_HOST_STORAGE  |awk -F '=' '{print $2}'
 source ~/.bash_caas_env
 
 env |grep CAAS_HOST_LB  |awk -F '=' '{print $2}'
-
 ```
 
 
 
+1
 
+
+
+1
+
+1
+
+1
 
 
 
 
 
 \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
-
-
-
-
 
 ssh 登陆主机后， 执行下面的命令
 
