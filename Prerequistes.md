@@ -163,10 +163,26 @@ env |grep CAAS_HOST_LB |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"
 env |grep CAAS_HOST_STORAGE |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" "arrays[3]}}' >> extra_hosts
 ```
 
+> 查看文件
+
+```
+ls
+
+# ansible_hosts  extra_hosts playbook
+```
+
+
+
 > 安装ansible
 
 ```bash
 yum install ansible -y
+```
+
+> 执行ansible 命令
+
+```
+ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./playbook/prepare.yaml
 ```
 
 
