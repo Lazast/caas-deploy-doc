@@ -205,7 +205,7 @@ cat > prepare.yaml << EOF
       shell: yum clean all && yum makecache
 
     - name: copy caas host resolve to all hosts
-      copy: src=../extra_hosts dest=/tmp/extra_hosts force=true
+      copy: src=./extra_hosts dest=/tmp/extra_hosts force=true
     - name: add extra host
       shell: cat /tmp/extra_hosts >> /etc/hosts
       run_once: true
