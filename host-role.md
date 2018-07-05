@@ -2,25 +2,22 @@
 
 ---
 
-# 主机角色
+## 主机角色
 
-## master 节点（**强制三台**）
+### master 节点（**强制三台**）
 
 > 请在本机linux 终端中输入，具体IP地址以当前实际情况为准
 
 ```
-
 # master1 IP 具体IP地址以实际情况为准
 CAAS_HOST_MASTER1=10.74.248.241
 # master2 IP 具体IP地址以实际情况为准 
 CAAS_HOST_MASTER2=10.74.248.242
 # master3 IP 具体IP地址以实际情况为准 
 CAAS_HOST_MASTER3=10.74.248.243
-
-
 ```
 
-## node节点\(至少两台\)
+### node节点\(至少两台\)
 
 > 请在本机linux 终端中输入，具体IP地址以当前实际情况为准
 
@@ -42,44 +39,35 @@ CAAS_HOST_NODE6=
 CAAS_HOST_NODE7=
 CAAS_HOST_NODE8=
 CAAS_HOST_NODE9=
-
-
 ```
 
-## 负载均衡节点（强制两台）
+### 负载均衡节点（强制两台）
 
 > 请在本机linux 终端中输入，具体IP地址以当前实际情况为准
 
 ```
-
-
 # loadbalance1 IP 具体IP地址以实际情况为准 
 CAAS_HOST_LB1=10.74.248.247
 # loadbalance1 IP 具体IP地址以实际情况为准 
 CAAS_HOST_LB2=10.74.248.248
-
-
 ```
 
-## 存储节点 （强制两台）
+### 存储节点 （强制两台）
 
 > 请在本机linux 终端中输入，具体IP地址以当前实际情况为准
 
 ```bash
-
 #storage1 IP 具体IP地址以实际情况为准
 CAAS_HOST_STORAGE1=10.74.248.249
-# storage2 IP 具体IP地址以实际情况为准 
+# storage2 IP 具体IP地址以实际情况为准 
 CAAS_HOST_STORAGE2=10.74.248.250
 ```
 
-## VIP （强制4个）
+### VIP （强制4个）
 
 > 请在本机linux 终端中输入，具体IP地址以当前实际情况为准
 
 ```
-
-
 #harbor vip 具体IP地址以实际情况为准 
 CAAS_VIP_HARBOR=10.74.248.251
 
@@ -91,8 +79,6 @@ CAAS_VIP_LOADBALANCE=10.74.248.253
 
 #mysql ldap vip 具体IP地址以实际情况为准 
 CAAS_VIP_MYSQL_LDAP=10.74.248.254
-
-
 ```
 
 ## 生成环境变量

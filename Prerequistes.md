@@ -4,7 +4,7 @@
 
 安装caas 平台提前需要准备的工具
 
-# 免密登录
+## 免密登录
 
 > 本地主机行执行如下命令,对所有主机免密登录
 
@@ -20,15 +20,15 @@ for h in $hosts; do
 done
 ```
 
-# 安装离线包
+## 安装离线包
 
-## 登陆CAAS\_MASTER1
+### 登陆CAAS\_MASTER1
 
 ```bash
 ssh root@${CAAS_HOST_MASTER1}
 ```
 
-## 配置离线安装包
+### 配置离线安装包
 
 > 在CAAS\_HOST\_MASTER1 上 ，找一块分区，分区大小必须 &gt; 50G， 若没有大于50G的分区，请联系客户或相关人员，增加盘或者划分去
 >
@@ -97,7 +97,7 @@ iptables -I INPUT -p tcp  --dport 38888 -j ACCEPT
 
 # 
 
-# master1配置ansible
+## master1配置ansible
 
 > 配置master1 到其他主机免密登陆
 
@@ -219,8 +219,6 @@ cat > prepare.yaml << EOF
 EOF
 
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./prepare.yaml
-
-
 ```
 
 > 退出 master1 主机，执行命令
@@ -228,8 +226,6 @@ ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=
 ```
 exit
 ```
-
-
 
 Next:  [docker](/docker.md)[ ](/host-role.md)
 
