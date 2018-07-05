@@ -118,6 +118,8 @@ baseurl=http://$CAAS_HOST_MASTER1:38888/
 
 
 EOF
+
+cp caas.repo /tmp/caas.repo
 ```
 
 > 配置ansible 配置文件
@@ -168,7 +170,7 @@ env |grep CAAS_HOST_STORAGE |awk -F '=' '{if ($2!="") { split(tolower($1),arrays
 ```
 ls
 
-# ansible_hosts  extra_hosts 
+# ansible_hosts  extra_hosts
 ```
 
 > 安装ansible
@@ -190,14 +192,14 @@ cat > prepare.yaml << EOF
     - name: bak prepare yum repo - bak repo
       shell: mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/caas_bak/
     - name: copy caas repo to all host
-      copy: src=/etc/yum.repos.d/caas.repo dest=/etc/yum.repos.d/ force=true
+      copy: src=/tmp/caas.repo dest=/etc/yum.repos.d/ force=true
     - name: yum update
       shell: yum clean all && yum makecache
 
     - name: copy caas host resolve to all hosts
       copy: src=../extra_hosts dest=/tmp/extra_hosts force=true
     - name: add extra host
-      shell: echo /tmp/extra_hosts >> /etc/hosts
+      shell: cat /tmp/extra_hosts >> /etc/hosts
 
     - name: set host names
       shell: hostnamectl {{ hostname }}
