@@ -111,7 +111,9 @@ vgcreate  vg-paas /dev/sdb1 /dev/xxx（按照实际磁盘数量和策略决定�
 mkdir /nfs
 ```
 
-### 
+
+
+
 
 Next:  [ldap](/ldap.md)
 
