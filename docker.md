@@ -6,21 +6,85 @@
 
 由于在上一篇文章中，我们已经通过ansible 自动全部安装完docker， 这里需要对docker 进行配置
 
-> 在本地主机终端上，执行下面的命令， 获得所有主机列表
+> docker 的配置和分区设置 ，不同的角色主机，有不同的配置，需要单独配置
+
+
+
+### master  配置
+
+> 在本地主机终端上，执行下面的命令， 获得所有MASTER 节点列表
 
 ```
 source ~/.bash_caas_env
 
-env |grep CAAS_HOST_ |awk -F '=' '{print $2}'
+env |grep CAAS_HOST_MASTER  |awk -F '=' '{print $2}'
+
 ```
 
-> 注意，如果您有iterm 可以使用iterm 的终端广播功能
->
-> 接下来 要顺序ssh登陆所有的打印出来的主机 ,都要执行后续的命令，
 
-## 每台docker 配置
 
-> ssh 登陆主机后， 执行下面的命令
+
+
+
+
+
+
+### node  配置
+
+在本地主机终端上，执行下面的命令， 获得所有Node 节点列表
+
+```
+source ~/.bash_caas_env
+
+env |grep CAAS_HOST_NODE  |awk -F '=' '{print $2}'
+
+```
+
+
+
+
+
+### 存储  配置
+
+在本地主机终端上，执行下面的命令， 获得所有存储 节点列表
+
+```
+source ~/.bash_caas_env
+
+env |grep CAAS_HOST_STORAGE  |awk -F '=' '{print $2}'
+
+```
+
+
+
+
+
+### 负载均衡 配置
+
+在本地主机终端上，执行下面的命令， 获得所有负载均衡 节点列表
+
+```
+source ~/.bash_caas_env
+
+env |grep CAAS_HOST_LB  |awk -F '=' '{print $2}'
+
+```
+
+
+
+
+
+
+
+
+
+\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+
+
+
+
+
+ssh 登陆主机后， 执行下面的命令
 
 ```
 lsblk -a
@@ -45,9 +109,7 @@ sr0              11:0    1 1024M  0 rom
 > 注意，需要分区的服务 有docker，openshift，（prometheus,  es 组件服务\)。
 >
 > 容量需求 从大大小排列： docker -&gt;
-
-
-
+>
 > 我们需要找到一个磁盘或者分区大于100G用于docker生产环境的direct-lvm存储配置，使用如下命令创建docker-vg
 
 ```
