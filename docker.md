@@ -42,11 +42,12 @@ sdc               8:32   0  100G  0 disk
 sr0              11:0    1 1024M  0 rom
 ```
 
-> 我们需要
+> 我们需要找到一个磁盘或者分区大于100G用于docker生产环境的direct-lvm存储配置，使用如下命令创建docker-vg
 
-
-
-
+```
+  pvcreate /dev/sdb
+  vgcreate docker-vg /dev/sdb
+```
 
 
 
