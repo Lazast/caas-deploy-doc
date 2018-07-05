@@ -72,23 +72,7 @@ env |grep CAAS_HOST_STORAGE  |awk -F '=' '{print $2}'
 
 
 
-需要一个磁盘或分区创建用于NFS使用的vg
-
-需要一个块设备格式化后存放harbor、mysql、ldap相关数据。
-
-### 负载均衡 配置
-
-在本地主机终端上，执行下面的命令， 获得所有负载均衡 节点列表
-
-```
-source ~/.bash_caas_env
-
-env |grep CAAS_HOST_LB  |awk -F '=' '{print $2}'
-```
-
-\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
-
-ssh 登陆主机后， 执行下面的命令
+ssh 登陆每台存储 主机， 输入下面命令 查看磁盘 和块设备
 
 ```
 lsblk -a
@@ -110,18 +94,28 @@ sdc               8:32   0  100G  0 disk
 sr0              11:0    1 1024M  0 rom
 ```
 
-> 注意，需要分区的服务 有docker，openshift，（prometheus,  es 组件服务\)。
+> 注意，需要分区的服务 有NFS，数据盘。
 >
-> 容量需求 从大大小排列： docker -&gt;
+> 假设只有一个额外的数据盘 sdb，我们需要将此数据盘分为两个分区，分别给NFS，数据盘，分区大小为6：4。 2T以下用fdisk 命令做分区， 2T以上用parted 命令做分区。
 >
-> 我们需要找到一个磁盘或者分区大于100G用于docker生产环境的direct-lvm存储配置，使用如下命令创建docker-vg
+> 如果有两个盘，一个盘给NFS 另一个给数据盘
+>
+> NFS分区不需要挂载目录
+
+> 数据分区 （需要格式化 使用  mkfs.xfs 格式化 ）需要挂载到 /caas\_data/， 使用mount  -t xfs  命令
+>
+> 最后修改 /etc/fstab 文件，添加开机挂载目录，将 数据分区设置为开机自动挂载
+>
+> 假设给NFS 使用的分区为 /dev/sdb1, 请执行下面命令 ，创建vg
+
+
 
 ```
-  pvcreate /dev/sdb
-  vgcreate docker-vg /dev/sdb
+vgcreate  vg-paas /dev/sdb1 /dev/xxx（按照实际磁盘数量和策略决定）
+mkdir /nfs
 ```
 
-## 验证
+### 
 
 Next:  [keepalived & haproxy](/keepalivedandhaproxy.md)
 
