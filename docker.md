@@ -8,7 +8,7 @@
 
 > docker 的配置和分区设置 ，不同的角色主机，有不同的配置，需要单独配置
 
-### master  配置
+### master  和 Node 配置
 
 > 在本地主机终端上，执行下面的命令， 获得所有MASTER 节点列表
 
@@ -16,9 +16,10 @@
 source ~/.bash_caas_env
 
 env |grep CAAS_HOST_MASTER  |awk -F '=' '{print $2}'
+env |grep CAAS_HOST_NODE  |awk -F '=' '{print $2}'
 ```
 
-> ssh 登陆每台master 主机， 输入下面命令 查看磁盘 和块设备
+> ssh 登陆每台master 和 node 主机， 输入下面命令 查看磁盘 和块设备
 
 ```
 lsblk -a
@@ -51,31 +52,13 @@ sr0              11:0    1 1024M  0 rom
 > 数据分区 （需要格式化 使用  mkfs.xfs 格式化 ）需要挂载到 /caas\_data/， 使用mount  -t xfs  命令
 >
 > 最后修改 /etc/fstab 文件，添加开机挂载目录，将openshift 和 数据分区设置为开机自动挂载
-
+>
 > 假设给docker 使用的分区为 /dev/sdb1, 请执行下面命令 ，创建vg
 
 ```
   pvcreate /dev/sdb1
   vgcreate docker-vg /dev/sdb1
 ```
-
-
-
-### node  配置
-
-在本地主机终端上，执行下面的命令， 获得所有Node 节点列表
-
-```
-source ~/.bash_caas_env
-
-env |grep CAAS_HOST_NODE  |awk -F '=' '{print $2}'
-```
-
-需要一个磁盘或分区用于创建docker-vg
-
-需要一个块设备用于创建os的分区，之后格式化后挂载到/var/lib/origin/openshift.local.volumes
-
-需要一个块设备格式化后做数据目录，存放os相关数据
 
 ### 存储  配置
 
@@ -86,6 +69,8 @@ source ~/.bash_caas_env
 
 env |grep CAAS_HOST_STORAGE  |awk -F '=' '{print $2}'
 ```
+
+
 
 需要一个磁盘或分区创建用于NFS使用的vg
 
