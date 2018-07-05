@@ -57,9 +57,10 @@ CAAS_VIP_MYSQL_LDAP=10.74.248.254
 > 环境变量的值需要根据特定现场情况去设置
 >
 > 如果NODE节点数&gt;3 ,NODE 的环境变量 KEY  为  CAAS\_NODE4  CAAS\_NODE5 CAAS\_NODE6 ... 以此类推
+>
+> 注意这里唯一需要手工填入的地方
 
 ```bash
-
 # master1 IP 具体IP地址以实际情况为准
 CAAS_HOST_MASTER1=10.74.248.241
 # master2 IP 具体IP地址以实际情况为准 
@@ -158,8 +159,6 @@ EOF
 
 echo ". ~/.bash_caas_env" >> ~/.bashrc
 source ~/.bashrc
-
-
 ```
 
 ## 
