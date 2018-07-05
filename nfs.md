@@ -20,6 +20,16 @@ role = {
 EOF
 ```
 
+> 安装nfs
+
+```
+cat > nfs.yaml << EOF
+
+
+
+EOF
+```
+
 ## 验证
 
 Next: [openshift master](/openshift-master.md)

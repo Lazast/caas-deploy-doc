@@ -203,6 +203,59 @@ EOF
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./harbor.yaml
 ```
 
+
+
+> harbor和ldap高可用，安装haproxy
+
+```
+cat > harbor.yaml << EOF
+
+global
+    log         127.0.0.1 local2
+
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    maxconn     4000
+    user        haproxy
+    group       haproxy
+    daemon
+
+    # turn on stats unix socket
+    stats socket /var/lib/haproxy/stats
+
+defaults
+    mode             http
+    log                     global
+    option                  httplog
+    option                  dontlognull
+    option http-server-close
+    #option forwardfor       except 127.0.0.0/8
+    option                  redispatch
+    retries                 3
+    timeout http-request    10s
+    timeout queue           1m
+    timeout connect         10s
+    timeout client          1m
+    timeout server          1m
+    timeout http-keep-alive 10s
+    timeout check           10s
+    maxconn                 3000
+
+listen mysql
+    bind :3306
+    mode tcp 
+    server mysql01 10.70.94.76:3306 check port 3306  
+    server mysql02 10.70.94.75:3306 check port 3306 backup
+
+listen ldap
+   bind :389
+   mode tcp
+   server ldap1 10.70.94.93:389 check port 389 
+   server ldap2 10.70.94.99:389 check port 389 backup
+
+EOF
+```
+
 ## 验证
 
 Next: [nfs](/nfs.md)
