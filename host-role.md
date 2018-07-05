@@ -153,15 +153,17 @@ export CAAS_HOST_NODE8=${CAAS_HOST_NODE8}
 export CAAS_HOST_NODE9=${CAAS_HOST_NODE9}
 
 # 域名
-export CAAS_DOMAIN_LDAP=ldap.caas.example.com
-export CAAS_DOMAIN_HARBOR=harbor.caas.example.com
-export CAAS_DOMAIN_OS_CONSOLE=os-console.caas.example.com
-export CAAS_DOMAIN_ALERT=alertmanager.caas.example.com
-export CAAS_DOMAIN_PROM=prometheus.caas.example.com
-export CAAS_DOMAIN_GRAFANA=grafana.caas.example.com
-export CAAS_DOMAIN_ES=es.caas.example.com
-export CAAS_DOMAIN_PORTAL=portal.caas.example.com
-export CAAS_DOMAIN_PORTAL_API=portalapi.caas.example.com
+
+export CAAS_DOMAIN_LDAP=${CAAS_DOMAIN_LDAP}
+export CAAS_DOMAIN_HARBOR=${CAAS_DOMAIN_HARBOR}
+export CAAS_DOMAIN_OS_CONSOLE=${CAAS_DOMAIN_OS_CONSOLE}
+export CAAS_DOMAIN_ALERT=${CAAS_DOMAIN_ALERT}
+export CAAS_DOMAIN_PROM=${CAAS_DOMAIN_PROM}
+export CAAS_DOMAIN_GRAFANA=${CAAS_DOMAIN_GRAFANA}
+export CAAS_DOMAIN_ES=${CAAS_DOMAIN_ES}
+export CAAS_DOMAIN_PORTAL=${CAAS_DOMAIN_PORTAL}
+export CAAS_DOMAIN_PORTAL_API=${CAAS_DOMAIN_PORTAL_API}
+
 
 
 
@@ -211,15 +213,16 @@ export CAAS_VIP_LOADBALANCE=10.74.248.253
 export CAAS_VIP_MYSQL_LDAP=10.74.248.254
 
 # 域名
-export CAAS_DOMAIN_LDAP=${CAAS_DOMAIN_LDAP}
-export CAAS_DOMAIN_HARBOR=${CAAS_DOMAIN_HARBOR}
-export CAAS_DOMAIN_OS_CONSOLE=${CAAS_DOMAIN_OS_CONSOLE}
-export CAAS_DOMAIN_ALERT=${CAAS_DOMAIN_ALERT}
-export CAAS_DOMAIN_PROM=${CAAS_DOMAIN_PROM}
-export CAAS_DOMAIN_GRAFANA=${CAAS_DOMAIN_GRAFANA}
-export CAAS_DOMAIN_ES=${CAAS_DOMAIN_ES}
-export CAAS_DOMAIN_PORTAL=${CAAS_DOMAIN_PORTAL}
-export CAAS_DOMAIN_PORTAL_API=${CAAS_DOMAIN_PORTAL_API}
+export CAAS_DOMAIN_LDAP=ldap.caas.example.com
+export CAAS_DOMAIN_HARBOR=harbor.caas.example.com
+export CAAS_DOMAIN_OS_CONSOLE=os-console.caas.example.com
+export CAAS_DOMAIN_ALERT=alertmanager.caas.example.com
+export CAAS_DOMAIN_PROM=prometheus.caas.example.com
+export CAAS_DOMAIN_GRAFANA=grafana.caas.example.com
+export CAAS_DOMAIN_ES=es.caas.example.com
+export CAAS_DOMAIN_PORTAL=portal.caas.example.com
+export CAAS_DOMAIN_PORTAL_API=portalapi.caas.example.com
+
 
 #如果NODE节点数>3
 #NODE 的环境变量 KEY  为  CAAS_HOST_NODE4  CAAS_HOST_NODE5 CAAS_HOST_NODE6  以此类推
