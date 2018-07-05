@@ -114,7 +114,7 @@ mkdir /nfs
 ## 安装配置docker
 
 ```
-cat > prepare.yaml << EOF
+cat > docker.yaml << EOF
 
 ---
 - hosts: all
@@ -156,6 +156,8 @@ cat > prepare.yaml << EOF
       service: name=docker state=started enabled=yes
 
 EOF
+
+ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./docker.yaml
 ```
 
 Next:  [ldap](/ldap.md)
