@@ -185,7 +185,7 @@ cat > prepare.yaml << EOF
     - name: bak prepare yum repo - dir create
       file: path=/etc/yum.repos.d/caas_bak state=directory
     - name: bak prepare yum repo - bak repo
-      shell: mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/caas_bak/
+      shell: mv -f /etc/yum.repos.d/*.repo /etc/yum.repos.d/caas_bak/
     - name: copy caas repo to all host
       copy: src=/tmp/caas.repo dest=/etc/yum.repos.d/ force=true
     - name: yum update
