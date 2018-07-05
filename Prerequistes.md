@@ -133,7 +133,7 @@ env |grep CAAS_HOST_STORAGE |awk -F '=' '{if ($2!="") { split(tolower($1),arrays
 
 cat > ansible_hosts <<EOF
 
-[dockers]
+[dockers:children]
 masters
 nodes
 storages
@@ -164,6 +164,7 @@ env |grep CAAS_HOST_STORAGE |awk -F '=' '{if ($2!="") { split(tolower($1),arrays
 
 ```
 ls
+
 
 # ansible_hosts  extra_hosts
 ```
