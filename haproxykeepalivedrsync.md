@@ -55,7 +55,6 @@ listen ldap
     server ldap2 {{ slave }}:3389 check port 3389 backup
 
 EOF
-
 ```
 
 > 安装并配置haproxy
@@ -78,7 +77,6 @@ cat > haproxy.cfg << EOF
 EOF
 
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./haproxy.yaml
-
 ```
 
 > 安装并配置KeepAlived && rsync
@@ -117,14 +115,9 @@ cat > keepalived-rsync.yaml << EOF
 EOF
 
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./keepalived-rsync.yaml
-
 ```
 
 ## 验证 {#验证}
-
-
-
-
 
 
 
