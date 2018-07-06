@@ -78,5 +78,5 @@ EOF
 
 ## 验证
 
-Next: [openshift master](/openshift-master.md)
+Next: [haproxy,keepalived,rsync](/haproxykeepalivedrsync.md)
 

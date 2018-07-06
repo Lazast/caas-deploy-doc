@@ -117,11 +117,7 @@ EOF
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./keepalived-rsync.yaml
 ```
 
-##  {#验证}
-
-##  {#验证}
-
 ## 验证 {#验证}
 
-
+Next:[openshift master](/openshift-master.md)
 
