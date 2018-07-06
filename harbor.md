@@ -206,7 +206,7 @@ ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=
 > harbor和ldap高可用，安装haproxy
 
 ```
-cat > harbor.yaml << EOF
+cat > haproxy.cfg << EOF
 
 global
     log         127.0.0.1 local2
@@ -242,14 +242,14 @@ defaults
 listen mysql
     bind :3306
     mode tcp 
-    server mysql01 10.70.94.76:3306 check port 3306  
-    server mysql02 10.70.94.75:3306 check port 3306 backup
+    server mysql01 {{ master }}:3306 check port 3306  
+    server mysql02 {{ slave }}:3306 check port 3306 backup
 
 listen ldap
    bind :389
    mode tcp
-   server ldap1 10.70.94.93:3389 check port 3389 
-   server ldap2 10.70.94.99:3389 check port 3389 backup
+   server ldap1 {{ master }}:3389 check port 3389 
+   server ldap2 {{ slave }}:3389 check port 3389 backup
 
 EOF
 ```
