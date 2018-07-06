@@ -203,7 +203,9 @@ EOF
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./harbor.yaml
 ```
 
-> harbor和ldap高可用，安装haproxy
+#### harbor和ldap高可用
+
+> 生成haproxy配置模版
 
 ```
 cat > haproxy.cfg << EOF
@@ -246,12 +248,34 @@ listen mysql
     server mysql02 {{ slave }}:3306 check port 3306 backup
 
 listen ldap
-   bind :389
-   mode tcp
-   server ldap1 {{ master }}:3389 check port 3389 
-   server ldap2 {{ slave }}:3389 check port 3389 backup
+    bind :389
+    mode tcp
+    server ldap1 {{ master }}:3389 check port 3389 
+    server ldap2 {{ slave }}:3389 check port 3389 backup
 
 EOF
+```
+
+> 安装并配置haproxy
+
+```
+cat > haproxy.cfg << EOF
+---
+- hosts: storages
+  vars: 
+    master: "{{ groups.storages[0] }}"
+    slave: "{{ groups.storages[1] }}"
+  tasks:
+    - name: install haproxy 
+      yum: name=haproxy state=installed
+    - name: copy haprxoy config 
+      template: src=./haproxy.cfg dest=/etc/haproxy/haproxy.cfg force=true
+    - name: enable and start haproxy
+      service: name=haproxy state=started enabled=true
+
+EOF
+
+ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./haproxy.yaml
 ```
 
 ## 验证
