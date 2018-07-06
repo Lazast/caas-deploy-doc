@@ -203,7 +203,7 @@ EOF
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./harbor.yaml
 ```
 
-#### harbor和ldap高可用
+#### harbor、ldap、nfs、mysql高可用
 
 > 生成haproxy配置模版
 
