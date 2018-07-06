@@ -12,5 +12,5 @@
 * [openshift master](openshift-master.md)
 * [openshift node](openshift-node.md)
 * [caas ](caas.md)
-* haproxy,keepalived,rsync
+* [smoke test](smoke-test.md)
 
