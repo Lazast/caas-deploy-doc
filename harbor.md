@@ -278,6 +278,44 @@ EOF
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./haproxy.yaml
 ```
 
+> 安装并配置KeepAlived && rsync
+
+```
+cat > keepalived-rsync.yaml << EOF
+
+---
+- hosts: storages
+  tasks:
+    - name: copy install script 
+      copy: src=../caas/nfs/keepalive-rsync/ dest=/opt/ force=true
+
+- hosts: "{{ groups.storages[0] }}"
+  tasks:
+    - name: config haproxy vip
+      shell: /opt/keepalive-ha.sh haproxy master {{ groups.storages[0] }} {{ groups.storages[1] }} $CAAS_VIP_MYSQL_LDAP
+    - name: install nfs vip
+      shell: /opt/keepalive-ha.sh nfs master {{ groups.storages[0] }} {{ groups.storages[1] }} $CAAS_VIP_NFS
+    - name: install harbor vip
+      shell: /opt/keepalive-ha.sh harbor master {{ groups.storages[0] }} {{ groups.storages[1] }} $CAAS_VIP_HARBOR
+    - name: install rsync
+      shell: /opt/rsync-ha.sh master {{ groups.storages[0] }} {{ groups.storages[1] }} $CAAS_VIP_HARBOR /nfs /caas_data/harbor_data
+
+- hosts: "{{ groups.storages[1] }}"
+  tasks:
+    - name: config haproxy vip
+      shell: /opt/keepalive-ha.sh haproxy backup {{ groups.storages[0] }} {{ groups.storages[1] }} $CAAS_VIP_MYSQL_LDAP
+    - name: install nfs vip
+      shell: /opt/keepalive-ha.sh nfs backup {{ groups.storages[0] }} {{ groups.storages[1] }} $CAAS_VIP_NFS
+    - name: install harbor vip
+      shell: /opt/keepalive-ha.sh harbor backup {{ groups.storages[0] }} {{ groups.storages[1] }} $CAAS_VIP_HARBOR
+    - name: install rsync
+      shell: /opt/rsync-ha.sh backup {{ groups.storages[0] }} {{ groups.storages[1] }} $CAAS_VIP_HARBOR /nfs /caas_data/harbor_data
+
+EOF
+
+ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./keepalived-rsync.yaml
+```
+
 ## 验证
 
 Next: [nfs](/nfs.md)
