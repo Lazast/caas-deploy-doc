@@ -129,14 +129,13 @@ cat > docker.yaml << EOF
   tasks:
     - name: install docker
       yum: name=docker state=installed
-      run_once: true
 
 ---
 - hosts: masters,nodes
   tasks:
     - name: docker storage setup
       shell: echo "VG=docker-vg" > /etc/sysconfig/docker-storage-setup
-      run_once: true
+
     - name: docker storage setup
       shell: docker-storage-setup
 
@@ -145,16 +144,15 @@ cat > docker.yaml << EOF
   tasks:
     - name: install docker-compose
       yum: name=docker-compose  state=installed
-      run_once: true
+
     - name: unset default docker OPTIONS
       shell: sed -i 's/^OPTIONS/#OPTIONS/' /etc/sysconfig/docker
-      run_once: true
+
     - name: set OPTIONS
       shell: echo "OPTIONS='--selinux-enabled --log-driver=journald --signature-verification=false' --registry-mirror=https://registry.docker-cn.com" >> /etc/sysconfig/docker
-      run_once: true
+
     - name: add insecure registry
       shell: echo "INSECURE_REGISTRY='--insecure-registry $CAAS_DOMAIN_HARBOR'" >> /etc/sysconfig/docker
-      run_once: true
 
 
 ---

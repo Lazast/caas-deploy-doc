@@ -14,8 +14,6 @@ hosts=$(env |grep CAAS_HOST_ |awk -F '=' '{print $2}')
 if [ ! -f ~/.ssh/id_rsa.pub ]; then
     ssh-keygen -t rsa -b 1024 -C "root"
 fi
-
-
 ```
 
 > copy 秘钥
@@ -214,7 +212,6 @@ cat > prepare.yaml << EOF
       copy: src=./extra_hosts dest=/tmp/extra_hosts force=true
     - name: add extra host
       shell: cat /tmp/extra_hosts >> /etc/hosts
-      run_once: true
 
     - name: set host names
       shell: hostnamectl set-hostname {{ hostname }}
