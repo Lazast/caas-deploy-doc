@@ -54,7 +54,7 @@ openshift_master_api_port=8443
 openshift_master_console_port=8443
 
 # logging configuration
-penshift_logging_image_version=v3.9
+openshift_logging_image_version=v3.9
 openshift_logging_image_prefix=$CAAS_DOMAIN_HARBOR/openshift/origin-
 openshift_logging_use_ops=true
 openshift_logging_master_public_url=https://$CAAS_DOMAIN_OS_CONSOLE:8443
