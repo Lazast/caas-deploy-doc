@@ -37,6 +37,7 @@ cat > nfs.yaml << EOF
         - rpcbind
         - python-devel
         - lvm2
+        - unzip
 
     - name: set the port for nfs
       shell: echo  "MOUNTD_PORT=20048" >> /etc/sysconfig/nfs && echo  "STATD_PORT=20050" >> /etc/sysconfig/nfs && echo "options lockd nlm_tcpport=20049" >> /etc/modprobe.d/lockd.conf && echo "options lockd nlm_udpport=20049" >> /etc/modprobe.d/lockd.conf

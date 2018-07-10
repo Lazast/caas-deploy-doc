@@ -60,7 +60,7 @@ EOF
 > 安装并配置haproxy
 
 ```
-cat > haproxy.cfg << EOF
+cat > haproxy.yaml << EOF
 ---
 - hosts: storages
   vars: 
