@@ -43,7 +43,7 @@ defaults
     maxconn                 3000
 
 listen mysql
-    bind :3306
+    bind :$CAAS_VIP_MYSQL_LDAP:3306
     mode tcp 
     server mysql01 {{ master }}:3306 check port 3306  
     server mysql02 {{ slave }}:3306 check port 3306 backup
