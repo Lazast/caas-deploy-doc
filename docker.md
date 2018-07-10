@@ -147,7 +147,7 @@ cat > docker.yaml << EOF
       shell: sed -i 's/^OPTIONS/#OPTIONS/' /etc/sysconfig/docker
 
     - name: set OPTIONS
-      shell: echo "OPTIONS='--selinux-enabled --log-driver=journald --signature-verification=false' --registry-mirror=https://registry.docker-cn.com" >> /etc/sysconfig/docker
+      shell: echo "OPTIONS='--selinux-enabled --log-driver=journald --signature-verification=false --registry-mirror=https://registry.docker-cn.com'" >> /etc/sysconfig/docker
 
     - name: add insecure registry
       shell: echo "INSECURE_REGISTRY='--insecure-registry $CAAS_DOMAIN_HARBOR'" >> /etc/sysconfig/docker
