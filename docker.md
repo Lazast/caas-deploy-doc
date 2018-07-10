@@ -142,6 +142,9 @@ cat > docker.yaml << EOF
   tasks:
     - name: install docker-compose
       yum: name=docker-compose  state=installed
+      
+    - name: unset default docker OPTIONS
+      shell: echo "DOCKER_STORAGE_OPTIONS='--storage-driver devicemapper'" > /etc/sysconfig/docker-storage
 
     - name: unset default docker OPTIONS
       shell: sed -i 's/^OPTIONS/#OPTIONS/' /etc/sysconfig/docker
