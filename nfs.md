@@ -37,6 +37,10 @@ cat > nfs.yaml << EOF
         - rpcbind
         - python-devel
         - lvm2
+
+    - name: set the port for nfs
+      shell: echo  "MOUNTD_PORT=20048" >> /etc/sysconfig/nfs && echo  "STATD_PORT=20050" >> /etc/sysconfig/nfs && echo "options lockd nlm_tcpport=20049" >> /etc/modprobe.d/lockd.conf && echo "options lockd nlm_udpport=20049" >> /etc/modprobe.d/lockd.conf
+
     - name: start servce nfs and rpcbind
       systemd:
         name: "{{ item }}"
@@ -45,11 +49,12 @@ cat > nfs.yaml << EOF
       with_items:
         - nfs
         - rpcbind
+
     - name: create the directory /nfs
       file:
         path: /nfs
         state: directory
-    
+
     - name: unarchive the nfsenv and convert2nfs to /opt/
       unarchive:
         src: "{{ item }}"
@@ -81,6 +86,7 @@ cat > nfs.yaml << EOF
     - name: start the nfs interface 
       shell: source /opt/rsync2nfs/bin/activate && cd /opt/conver2nfs &&  uwsgi -d /var/log/convert2nfs.log --http-socket :8080 --venv /opt/rsync2nfs --pecan config.py 
 EOF
+ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./nfs.yaml
 ```
 
 ## 验证
