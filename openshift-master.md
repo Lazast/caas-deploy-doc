@@ -42,6 +42,7 @@ openshift_check_min_host_disk_gb=1
 # 安装使用的版本
 openshift_pkg_version=-3.9.0
 openshift_version=3.9.0
+openshift_image_tag=v3.9.0
 openshift_master_cluster_method=native
 openshift_master_cluster_hostname=$CAAS_DOMAIN_OS_CONSOLE
 openshift_master_cluster_public_hostname=$CAAS_DOMAIN_OS_CONSOLE
