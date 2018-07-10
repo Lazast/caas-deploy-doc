@@ -90,7 +90,7 @@ cat > keepalived-rsync.yaml << EOF
 - hosts: storages
   tasks:
     - name: copy install script 
-      copy: src=../caas/nfs/keepalive-rsync/ dest=/opt/ force=true
+      copy: src=../caas/nfs/keepalive-rsync/ dest=/opt/ force=true mode=0755
 
 - hosts: "{{ groups.storages[0] }}"
   tasks:
