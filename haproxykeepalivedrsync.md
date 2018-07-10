@@ -91,6 +91,15 @@ cat > keepalived-rsync.yaml << EOF
   tasks:
     - name: copy install script 
       copy: src=../caas/nfs/keepalive-rsync/ dest=/opt/ force=true mode=0755
+    - name: install keepalived
+      yum: 
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - keepalived
+        - rsync
+    - name: clear /etc/keepalived/keepalived.conf
+      shell: echo '! Configuration File for keepalived' > /etc/keepalived/keepalived.conf
 
 - hosts: "{{ groups.storages[0] }}"
   tasks:
