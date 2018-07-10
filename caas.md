@@ -156,6 +156,8 @@ EOF
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./mysql.yaml
 ```
 
+## 
+
 ## 验证
 
 Next: [smoke test](/smoke-test.md)

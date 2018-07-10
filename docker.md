@@ -130,7 +130,6 @@ cat > docker.yaml << EOF
     - name: install docker
       yum: name=docker state=installed
 
----
 - hosts: masters,nodes
   tasks:
     - name: docker storage setup
@@ -139,7 +138,6 @@ cat > docker.yaml << EOF
     - name: docker storage setup
       shell: docker-storage-setup
 
----
 - hosts: storages
   tasks:
     - name: install docker-compose
@@ -155,7 +153,6 @@ cat > docker.yaml << EOF
       shell: echo "INSECURE_REGISTRY='--insecure-registry $CAAS_DOMAIN_HARBOR'" >> /etc/sysconfig/docker
 
 
----
 - hosts: all
   tasks:
     - name: enable and start docker

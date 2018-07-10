@@ -219,7 +219,6 @@ cat > prepare.yaml << EOF
     - name: disable firewalld
       service: name=firewalld state=stopped enabled=no
 
----
 - hosts: storages
   tasks:
     - name: Disable selinux
