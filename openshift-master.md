@@ -9,7 +9,6 @@
 > 生成openshift inventory变量配置
 
 ```
-
 cat > ansible_os_hosts << EOF
 
 [OSEv3:children]
@@ -103,10 +102,31 @@ openshift_web_console_version=v3.9
 EOF
 ```
 
-> 生成openshift inventory主机配置
+> 生成openshift inventory主机配置，并安装openshift
 
 ```
+env |grep CAAS_HOST_MASTER |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" hostname="arrays[3]}}' > /tmp/masters
+env |grep CAAS_HOST_NODE |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" hostname="arrays[3]}}' > /tmp/nodes
+env |grep CAAS_HOST_LB |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" hostname="arrays[3]}}' > /tmp/lbs
+env |grep CAAS_HOST_STORAGE |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" hostname="arrays[3]}}' > /tmp/storage
 
+cat >> ansible_os_hosts <<EOF
+
+[masters]
+$(cat /tmp/masters)
+[etcd]
+$(cat /tmp/masters)
+[lb]
+$(cat /tmp/lbs)
+[nodes]
+$(cat /tmp/masters | awk '{print $1 " openshift_node_labels=\"{'\''region'\'': '\''master'\''}\" openshift_schedulable=true"}')
+$(cat /tmp/nodes | awk '{print $1 " openshift_node_labels=\"{'\''region'\'': '\''node'\''}\" openshift_schedulable=true"}')
+
+EOF
+
+tar -xvf ../openshift/openshift-ansible.tar -C ../openshift/
+
+ansible-playbook -i ./ansible_os_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ../openshift/openshift-ansible/playbooks/deploy_cluster.yml
 ```
 
 ## 验证
