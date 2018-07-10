@@ -6,7 +6,7 @@ haproxy keepalived rsync 安装
 
 ## 安装步骤
 
-生成haproxy配置模版
+> 生成haproxy配置模版
 
 ```
 cat > haproxy.cfg << EOF

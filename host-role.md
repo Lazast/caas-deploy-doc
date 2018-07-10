@@ -81,6 +81,17 @@ CAAS_VIP_LOADBALANCE=10.74.248.253
 CAAS_VIP_MYSQL_LDAP=10.74.248.254
 ```
 
+### 容器网络规划
+
+> 请根据部署环境的实际情况，对容器的网络进行规划，可参考下面的例子。
+
+```
+# 系统中主机ip的掩码为9位，系统支持的最大主机数为2^9=512
+OSM_HOST_SUBNET_LENGTH=9
+# 每个主机上的pod ip掩码位数为18-9=9，即每台主机上最多有2^9=512个pod的ip
+OSM_CLUSTER_NETWORK_CIDR=10.128.0.0/18
+```
+
 ## 域名
 
 > 请在本机linux 终端中输入，具体地址以当前实际情况为准，具体泛域名后缀\(example.com\)以实际情况为准
@@ -95,6 +106,7 @@ CAAS_DOMAIN_GRAFANA=grafana.caas.example.com
 CAAS_DOMAIN_ES=es.caas.example.com
 CAAS_DOMAIN_PORTAL=portal.caas.example.com
 CAAS_DOMAIN_PORTAL_API=portalapi.caas.example.com
+CAAS_DOMAIN_PAN=caas.example.com
 ```
 
 ## 生成环境变量
