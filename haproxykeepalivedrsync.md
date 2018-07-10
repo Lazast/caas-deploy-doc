@@ -67,6 +67,8 @@ cat > haproxy.yaml << EOF
     master: "{{ groups.storages[0] }}"
     slave: "{{ groups.storages[1] }}"
   tasks:
+    - name: set ip_nonlocal_bind
+      shell: echo "net.ipv4.ip_nonlocal_bind=1" >> /etc/sysctl.conf && sysctl -p
     - name: install haproxy 
       yum: name=haproxy state=installed
     - name: copy haprxoy config 
