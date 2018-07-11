@@ -12,6 +12,7 @@ caas portal等相关安装
 cat > mysql.yaml << EOF
 
 ---
+---
 - hosts: storages
   tasks:
     - name: uninstall conflict mariadb-libs 
@@ -30,6 +31,7 @@ cat > mysql.yaml << EOF
 - hosts: "{{ groups.storages[0] }}"
   vars:
     root_password: "adminpwd"
+    bind_address: "{{ groups.storages[0] }}"
   tasks:
     - name: copy mysql conf 
       template: src=../caas/mysql/my01.cnf  dest=/etc/my.cnf
@@ -70,6 +72,7 @@ cat > mysql.yaml << EOF
 - hosts: "{{ groups.storages[1] }}"
   vars:
     root_password: "adminpwd"
+    bind_address: "{{ groups.storages[1] }}"
   tasks:
     - name: copy mysql conf 
       template: src=../caas/mysql/my02.cnf  dest=/etc/my.cnf
