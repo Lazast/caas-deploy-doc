@@ -29,6 +29,7 @@ cat > mysql.yaml << EOF
       shell: mysql_install_db --user=mysql --datadir=/caas_data/mysql_data/mysql
     - name: add iptable for mysql
       shell: iptables -I INPUT -p tcp --dport 3306 -j ACCEPT  && service iptables save
+      
 
 - hosts: "{{ groups.storages[0] }}"
   vars:
