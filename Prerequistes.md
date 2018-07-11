@@ -200,7 +200,17 @@ yum install ansible -y
 ```
 cat > selinux-check.yaml << EOF
 
-
+---
+- hosts: masters,nodes
+  tasks:
+    - name: enable selinux Persist
+      shell: echo "SELINUX=enforcing" > /etc/selinux/config
+    - name: enable selinux Persist
+      shell: echo "SELINUXTYPE=targeted" >> /etc/selinux/config
+    - name: check selinux
+      shell: setenforce 1
+      register: result
+      failed_when: "result.rc != 0 or 'SELinux is disabled' in result.stderr"
 
 EOF
 
