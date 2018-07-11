@@ -13,8 +13,8 @@ cat > config.py << EOF
 role = {
     "identity": "{{ nfs_role }}", 
     "port": "8080",
-    "master_ip": "10.74.248.249",
-    "slave_ip": "10.74.248.250",
+    "master_ip": "$CAAS_HOST_STORAGE1",
+    "slave_ip": "$CAAS_HOST_STORAGE2",
 }
 
 EOF
@@ -79,7 +79,7 @@ cat > nfs.yaml << EOF
     - template: 
         src: config.py
         dest: /opt/convert2nfs/convert2nfs/controllers/config.py
- 
+
 - hosts: storages
   tasks: 
     - name: install the python interface for nfs
