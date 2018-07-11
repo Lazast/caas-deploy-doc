@@ -208,6 +208,23 @@ cat > prepare.yaml << EOF
     - name: yum update
       shell: yum clean all && yum makecache
 
+    - name: base packages install
+      yum: 
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - wget 
+        - git 
+        - net-tools 
+        - bind-utils 
+        - yum-utils 
+        - iptables-services 
+        - bridge-utils 
+        - bash-completion 
+        - kexec-tools 
+        - sos 
+        - psacct
+
     - name: copy caas host resolve to all hosts
       copy: src=./extra_hosts dest=/tmp/extra_hosts force=true
     - name: add extra host
