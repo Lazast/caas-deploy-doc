@@ -175,6 +175,10 @@ env |grep CAAS_HOST_MASTER |awk -F '=' '{if ($2!="") { split(tolower($1),arrays,
 env |grep CAAS_HOST_NODE |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" "arrays[3]}}' >> extra_hosts
 env |grep CAAS_HOST_LB |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" "arrays[3]}}' >> extra_hosts
 env |grep CAAS_HOST_STORAGE |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" "arrays[3]}}' >> extra_hosts
+harbor_host="`env|grep CAAS_VIP_HARBOR|awk -F= '{print $2}'` `env|grep CAAS_DOMAIN_HARBOR |awk -F= '{print $2}'`"
+ldap_host="`env|grep CAAS_VIP_MYSQL_LDAP|awk -F= '{print $2}'` `env|grep CAAS_DOMAIN_LDAP |awk -F= '{print $2}'`"
+grep "$harbor_host" ./extra_hosts || echo $harbor_host >> ./extra_hosts
+grep "$ldap_host" ./extra_hosts || echo $ldap_host >> ./extra_hosts
 ```
 
 > 查看文件
