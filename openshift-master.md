@@ -74,15 +74,15 @@ docker_upgrade=False
 openshift_docker_options="--log-driver=json-file --log-opt max-size=50m -l warn --ipv6=false"
 openshift_docker_insecure_registries=$CAAS_DOMAIN_HARBOR
 
-oreg_url=$CAAS_DOMAIN_HARBOR/openshift/origin-${component}:${version}
+oreg_url=$CAAS_DOMAIN_HARBOR/openshift/origin-\${component}:\${version}
 #openshift_examples_modify_imagestreams=true
 # 在下载镜像之前，首先选择addition_registry下载镜像
 openshift_docker_additional_registries=$CAAS_DOMAIN_HARBOR
 
 # 系统中主机ip的掩码为9位，系统支持的最大主机数为2^9=512
-osm_host_subnet_length=$OSM_HOST_SUBNET_LENGTH
+osm_host_subnet_length=$CAAS_OSM_HOST_SUBNET_LENGTH
 # 每个主机上的pod ip掩码位数为18-9=9，即每台主机上最多有2^9=512个pod的ip
-osm_cluster_network_cidr=$OSM_CLUSTER_NETWORK_CIDR
+osm_cluster_network_cidr=$CAAS_OSM_CLUSTER_NETWORK_CIDR
 
 # Configure node kubelet arguments. pods-per-core is valid in OpenShift Origin 1.3 or OpenShift Container Platform 3.3 and later.
 openshift_node_kubelet_args={'pods-per-core': ['10'], 'max-pods': ['320'], 'image-gc-high-threshold': ['90'], 'image-gc-low-threshold': ['80']}
