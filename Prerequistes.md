@@ -272,8 +272,8 @@ cat > prepare.yaml << EOF
       shell: echo "SELINUX=disabled" > /etc/selinux/config
     - name: Disable selinux Persist
       shell: echo "SELINUXTYPE=targeted" >> /etc/selinux/config
-      
-- hosts: $CAAS_HOST_MASTER1 
+
+- hosts: masters 
   tasks:
     - name: install java 
       yum: name=java state=present
