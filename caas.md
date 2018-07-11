@@ -11,7 +11,7 @@ caas portal等相关安装
 ```
 cat > mysql.yaml << EOF
 
----
+
 ---
 - hosts: storages
   tasks:
