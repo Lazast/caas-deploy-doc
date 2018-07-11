@@ -195,7 +195,19 @@ ls
 yum install ansible -y
 ```
 
-> 生成ansible 配置文件， 执行ansible 命令
+> 检查所有master和node节点的selinux, **当下面命令运行出现错误时，请手动重启所有master和node节点, 之后再次运行该命令，确保该修改成功**
+
+```
+cat > selinux-check.yaml << EOF
+
+
+
+EOF
+
+ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./selinux-check.yaml
+```
+
+> 生成prepare配置文件， 进行环境的一些准备工作
 
 ```
 cat > prepare.yaml << EOF
