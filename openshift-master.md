@@ -128,6 +128,8 @@ EOF
 tar -xvf ../openshift/openshift-ansible.tar -C ../openshift/
 
 ansible-playbook -i ./ansible_os_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ../openshift/openshift-ansible/playbooks/deploy_cluster.yml
+# 部署节点为master1
+oc adm policy add-cluster-role-to-user cluster-admin admin
 ```
 
 ## 验证
