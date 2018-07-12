@@ -129,17 +129,17 @@ export CAAS_DOMAIN_PAN=caas.example.com
 
 ```
 # omp镜像的tag
-export CAAS_VAR_OMP_IMAGE_TAG=v1
+export CAAS_VAR_TAG_OMP_IMAGE=v1
 # agamaha镜像的tag
-export CAAS_VAR_AGAMAHA_IMAGE_TAG=v1
+export CAAS_VAR_TAG_AGAMAHA_IMAGE=v1
 # harpoxy镜像的tag
-export CAAS_VAR_HAPROXY_IMAGE_TAG=v1
+export CAAS_VAR_TAG_HAPROXY_IMAGE=v1
 # hcenter镜像的tag
-export CAAS_VAR_HCENTER_IMAGE_TAG=v1
+export CAAS_VAR_TAG_HCENTER_IMAGE=v1
 # muddle镜像的tag
-export CAAS_VAR_MUDDLE_IMAGE_TAG=v1
+export CAAS_VAR_TAG_MUDDLE_IMAGE=v1
 # redis镜像的tag
-export CAAS_VAR_REDIS_IMAGE_TAG=3.2
+export CAAS_VAR_TAG_REDIS_IMAGE=3.2
 ```
 
 \#\#\#\#\#\#\#\#\#\#\#\#\#caas 资源规划至此结束\#\#\#\#\#\#\#\#\#
