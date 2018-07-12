@@ -163,6 +163,7 @@ cat > mysql.yaml << EOF
     caas_domain_prom: "$CAAS_DOMAIN_PROM"
     caas_domain_es: "$CAAS_DOMAIN_ES"
     caas_domain_harbor: "$CAAS_DOMAIN_HARBOR"
+    caas_domain_pan: "$CAAS_DOMAIN_PAN"
   tasks:
     - name: MySQL | set root permission 
       mysql_user:
