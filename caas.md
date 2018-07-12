@@ -194,7 +194,39 @@ EOF
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./mysql.yaml
 ```
 
-## 
+> 部署caasprotal
+
+```
+cat > caasportal.yaml << EOF
+---
+- hosts: localhost
+  vars:
+    caas_vip_mysql_ldap: $CAAS_VIP_MYSQL_LDAP
+    harbor_url: $CAAS_DOMAIN_HARBOR
+    omp_image_tag:  $CAAS_VAR_TAG_OMP_IMAGE
+    agamaha_image_tag: $CAAS_VAR_TAG_AGAMAHA_IMAGE
+    caas_vip_nfs: $CAAS_VIP_NFS
+    caas_domain_os_console: $CAAS_DOMAIN_OS_CONSOLE
+    haproxy_image_tag: $CAAS_VAR_TAG_HAPROXY_IMAGE
+    hcenter_image_tag: $CAAS_VAR_TAG_HCENTER_IMAGE
+    caas_domain_portal_api: $CAAS_DOMAIN_PORTAL_API
+    muddle_image_tag: $CAAS_VAR_TAG_MUDDLE_IMAGE
+    redis_image_tag: $CAAS_VAR_TAG_REDIS_IMAGE
+    caas_domain_portal: $CAAS_DOMAIN_PORTAL
+  
+  tasks:
+    - name: import the images for caasportal
+      shell: cd ../images && ./import_caasportal.sh  $CAAS_DOMAIN_HARBOR Caas12345
+    - name: create yaml file for caasportal
+      template:
+        src: ../caas/portal/ompall.yml
+        dest: /tmp/ompall.yml
+    - name: deploy the caasportal
+      shell: oc login -uadmin -pCaas54321 && oc create -f /tmp/ompall.yml
+EOF
+
+ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./caasportal.yaml
+```
 
 ## 验证
 
