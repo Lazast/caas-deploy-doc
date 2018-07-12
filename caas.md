@@ -11,7 +11,6 @@ caas portal等相关安装
 ```
 cat > mysql.yaml << EOF
 
-
 ---
 - hosts: storages
   tasks:
@@ -29,7 +28,6 @@ cat > mysql.yaml << EOF
       shell: mysql_install_db --user=mysql --datadir=/caas_data/mysql_data/mysql
     - name: add iptable for mysql
       shell: iptables -I INPUT -p tcp --dport 3306 -j ACCEPT  && service iptables save
-
 
 - hosts: "{{ groups.storages[0] }}"
   vars:
@@ -112,7 +110,6 @@ cat > mysql.yaml << EOF
         login_unix_socket: "/caas_data/mysql_data/mysql/mysql.sock"
         state: present
 
-
 - hosts: "{{ groups.storages[0] }}"
   vars:
     root_password: "adminpwd"
@@ -134,7 +131,6 @@ cat > mysql.yaml << EOF
         \"
         "
 
-
 - hosts: "{{ groups.storages[1] }}"
   vars:
     root_password: "adminpwd"
@@ -153,6 +149,43 @@ cat > mysql.yaml << EOF
         STOP SLAVE;
         CHANGE MASTER TO MASTER_HOST='{{ groups.storages[0] }}', MASTER_USER='repl', MASTER_PASSWORD='slavepass', MASTER_LOG_FILE='{{ log_file_pos.File }}', MASTER_LOG_POS={{ log_file_pos.Position }};
         START SLAVE;
+        \"
+        "
+
+- hosts: "{{ groups.storages[0] }}"
+  vars:
+    root_password: "adminpwd"
+    caas_domain_os_console: "$CAAS_DOMAIN_OS_CONSOLE"
+    caas_domain_portal_api: "$CAAS_DOMAIN_PORTAL_API"
+    caas_vip_mysql_ldap: "$CAAS_VIP_MYSQL_LDAP"
+    caas_domain_harbor: "$CAAS_DOMAIN_HARBOR"
+    caas_vip_nfs: "$CAAS_VIP_NFS"
+    caas_domain_prom: "$CAAS_DOMAIN_PROM"
+    caas_domain_es: "$CAAS_DOMAIN_ES"
+    caas_domain_harbor: "$CAAS_DOMAIN_HARBOR"
+  tasks:
+    - name: MySQL | set root permission 
+      mysql_user:
+        name: "root"
+        login_user: "root"
+        login_password: "{{ root_password }}"
+        user: "root"
+        password: "{{ root_password }}"
+        host: "%"
+        priv: "*.*:ALL"
+        login_unix_socket: "/caas_data/mysql_data/mysql/mysql.sock"
+        state: present
+    - name: copy hcpaas sql file 
+      template: src=../caas/mysql/hcpaas_schema.sql dest=/caas_data/mysql_data/
+    - name: copy hcpaas bmp sql file 
+      template: src=../caas/mysql/hcpaas_bmp_schema.sql dest=/caas_data/mysql_data/
+
+    - name: MySQL | init mysql db
+      command: "
+        mysql -uroot -p{{ root_password }} -e
+        \"
+        SOURCE /caas_data/mysql_data/hcpaas_schema.sql;
+        SOURCE /caas_data/mysql_data/hcpaas_bmp_schema.sql;
         \"
         "
 
