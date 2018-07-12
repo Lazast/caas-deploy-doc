@@ -139,10 +139,8 @@ export CAAS_VAR_HCENTER_IMAGE_TAG=v1
 # muddle镜像的tag
 export CAAS_VAR_MUDDLE_IMAGE_TAG=v1
 # redis镜像的tag
-export CAAS_VAR_REDIS_IMAGE_TAG=v1
+export CAAS_VAR_REDIS_IMAGE_TAG=3.2
 ```
-
-
 
 \#\#\#\#\#\#\#\#\#\#\#\#\#caas 资源规划至此结束\#\#\#\#\#\#\#\#\#
 
@@ -154,8 +152,6 @@ export CAAS_VAR_REDIS_IMAGE_TAG=v1
 echo ". ~/.bash_caas_env" >> ~/.bashrc
 source ~/.bashrc
 ```
-
-
 
 Next:  [Prerequistites](https://legacy.gitbook.com/book/jiulongzaitian/caas/edit#)
 
