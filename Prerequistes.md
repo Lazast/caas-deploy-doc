@@ -6,7 +6,7 @@
 
 ## 免密登录
 
-> 本地主机行执行如下命令,对所有主机免密登录
+> 在CAAS\_HOST\_MASTER1上执行如下命令,对所有主机免密登录
 
 ```bash
 hosts=$(env |grep CAAS_HOST_ |awk -F '=' '{print $2}')
@@ -26,15 +26,9 @@ done
 
 ## 安装离线包
 
-### 登陆CAAS\_MASTER1
-
-```bash
-ssh root@${CAAS_HOST_MASTER1}
-```
-
 ### 配置离线安装包
 
-> 在CAAS\_HOST\_MASTER1 上 ，找一块分区，分区大小必须 &gt; 50G， 若没有大于50G的分区，请联系客户或相关人员，增加盘或者划分去
+> 在CAAS\_HOST\_MASTER1 上 ，找一块分区，分区大小必须 &gt; 50G， 若没有大于50G的分区，请联系客户或相关人员，增加盘或者划分分区
 >
 > 分区查看命令  （Avail）
 
@@ -70,28 +64,16 @@ else
 fi
 ```
 
-> 将本地caas-offline.tar 文件scp 到 CAAS\_MASTER1 机器
+> 将caas-offline.tar离线包上传到到 CAAS\_MASTER1 机器的目录$offlinedata下
+
+解压离线文件
 
 ```bash
-scp ./caas-offline.tar root@${CAAS_HOST_MASTER1}:~
-```
-
-> 重新登录CAAS\_MASTER1机器
-
-```bash
-# 重新登录CAAS_MASTER1
-ssh root@${CAAS_HOST_MASTER1}
-```
-
-> 解压离线文件
-
-```bash
-tar xvf ~/caas-offline.tar -C $offlinedata
+tar xvf $offlinedata/caas-offline.tar -C $offlinedata
 
 cd $offlinedata/caas-offline/cent7.2
 
-# 启动 http 服务
-
+# 启动 http 服务，搭建caas的yum源
 
 nohup python -m SimpleHTTPServer 38888 &
 
@@ -99,24 +81,7 @@ nohup python -m SimpleHTTPServer 38888 &
 iptables -I INPUT -p tcp  --dport 38888 -j ACCEPT
 ```
 
-# 
-
 ## master1配置ansible
-
-> 配置master1 到其他主机免密登陆
-
-```bash
-hosts=$(env |grep CAAS_HOST_ |awk -F '=' '{print $2}')
-
-if [ ! -f ~/.ssh/id_rsa.pub ]; then
-    ssh-keygen -t rsa -b 1024 -C "root"
-fi
-
-for h in $hosts; do
-    ssh-copy-id root@$h
-    # 注意 这里会让用户输入 yes 和用户名 密码
-done
-```
 
 > 配置本地yum 源
 

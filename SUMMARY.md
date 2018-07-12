@@ -2,7 +2,7 @@
 
 * [Introduction](README.md)
 * [requirements](requirements.md)
-* [host roles](host-role.md)
+* [resource planning](host-role.md)
 * [Prerequisites](Prerequistes.md)
 * [docker](docker.md)
 * [ldap](ldap.md)
