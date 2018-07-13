@@ -125,12 +125,13 @@ $(cat /tmp/nodes | awk '{print $1 " openshift_node_labels=\"{'\''region'\'': '\'
 
 EOF
 
-tar -xvf ../openshift/openshift-ansible.tar -C ../openshift/
 
 # import image for openshift
 cd ../images/os39-base-images/
 ./import.sh
 cd -
+
+tar -xvf ../openshift/openshift-ansible.tar -C ../openshift/
 
 ansible-playbook -i ./ansible_os_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ../openshift/openshift-ansible/playbooks/deploy_cluster.yml
 # 当前节点为master1
