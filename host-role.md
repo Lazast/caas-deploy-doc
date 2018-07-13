@@ -153,5 +153,5 @@ echo ". ~/.bash_caas_env" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-Next:  [Prerequistites](https://legacy.gitbook.com/book/jiulongzaitian/caas/edit#)
+Next:  [Prerequisites](/Prerequistes.md)
 
