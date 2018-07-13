@@ -142,6 +142,7 @@ harbor_host="`env|grep CAAS_VIP_HARBOR|awk -F= '{print $2}'` `env|grep CAAS_DOMA
 ldap_host="`env|grep CAAS_VIP_MYSQL_LDAP|awk -F= '{print $2}'` `env|grep CAAS_DOMAIN_LDAP |awk -F= '{print $2}'`"
 grep "$harbor_host" ./extra_hosts || echo $harbor_host >> ./extra_hosts
 grep "$ldap_host" ./extra_hosts || echo $ldap_host >> ./extra_hosts
+echo "$CAAS_VIP_LOADBALANCE $CAAS_DOMAIN_OS_CONSOLE" >> ./extra_hosts
 ```
 
 > 查看文件

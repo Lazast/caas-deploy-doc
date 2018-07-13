@@ -197,8 +197,6 @@ EOF
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./mysql.yaml
 ```
 
-
-
 > 配置DNS
 
 ```
@@ -212,8 +210,6 @@ EOF
 ansible -i ansible_hosts all -m copy -a 'src=./domain.conf dest=/etc/dnsmasq.d/'
 ansible -i ansible_hosts all -m shell -a 'systemctl restart dnsmasq'
 ```
-
-
 
 > 部署caasprotal
 
@@ -249,7 +245,11 @@ EOF
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./caasportal.yaml
 ```
 
+> 部署promethues
 
+```
+
+```
 
 ## 验证
 
