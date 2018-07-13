@@ -77,7 +77,6 @@ nohup python -m SimpleHTTPServer 38888 &
 
 # 配置iptables 规则，其实能访问
 iptables -I INPUT -p tcp  --dport 38888 -j ACCEPT  && service iptables save
-
 ```
 
 ## master1配置ansible
@@ -198,10 +197,6 @@ cd $offlinedata/caas-offline/install
 
 \#\#\#\#\#\#结束\#\#\#\#\#
 
-
-
-
-
 > 生成prepare配置文件， 进行环境的一些准备工作
 
 ```
@@ -235,7 +230,8 @@ cat > prepare.yaml << EOF
         - kexec-tools 
         - sos 
         - psacct
-
+        - PyYAML
+        
     - name: copy caas host resolve to all hosts
       copy: src=./extra_hosts dest=/tmp/extra_hosts force=true
     - name: add extra host
