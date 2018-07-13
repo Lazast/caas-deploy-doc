@@ -231,6 +231,16 @@ EOF
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./caasportal.yaml
 ```
 
+> 配置DNS
+
+```
+
+```
+
+
+
+
+
 ## 验证
 
 Next: [smoke test](/smoke-test.md)
