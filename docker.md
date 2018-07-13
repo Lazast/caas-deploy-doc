@@ -142,7 +142,7 @@ cat > docker.yaml << EOF
   tasks:
     - name: install docker-compose
       yum: name=docker-compose  state=installed
-      
+
     - name: unset default docker OPTIONS
       shell: echo "DOCKER_STORAGE_OPTIONS='--storage-driver devicemapper'" > /etc/sysconfig/docker-storage
 
@@ -155,11 +155,16 @@ cat > docker.yaml << EOF
     - name: add insecure registry
       shell: echo "INSECURE_REGISTRY='--insecure-registry $CAAS_DOMAIN_HARBOR'" >> /etc/sysconfig/docker
 
+- hosts: localhost
+  tasks:
+    - name: set insecure registry for master1
+      shell: echo "INSECURE_REGISTRY='--insecure-registry $CAAS_DOMAIN_HARBOR'" >> /etc/sysconfig/docker
 
 - hosts: all
   tasks:
     - name: enable and start docker
       service: name=docker state=started enabled=yes
+
 
 
 EOF
