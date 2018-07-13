@@ -188,7 +188,10 @@ cat > mysql.yaml << EOF
         SOURCE /caas_data/mysql_data/hcpaas_bmp_schema.sql;
         \"
         "
-
+    - name: copy user clean script 
+      template: src=../caas/mysql/user_clear.sh dest=/caas_data/mysql_data/ mode=0755
+    - name: clear useless user 
+      shell: /caas_data/mysql_data/user_clear.sh
 EOF
 
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./mysql.yaml
@@ -213,7 +216,7 @@ cat > caasportal.yaml << EOF
     muddle_image_tag: $CAAS_VAR_TAG_MUDDLE_IMAGE
     redis_image_tag: $CAAS_VAR_TAG_REDIS_IMAGE
     caas_domain_portal: $CAAS_DOMAIN_PORTAL
-  
+
   tasks:
     - name: import the images for caasportal
       shell: cd ../images && ./import_caasportal.sh  $CAAS_DOMAIN_HARBOR Caas12345
