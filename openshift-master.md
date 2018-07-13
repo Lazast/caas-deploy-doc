@@ -34,7 +34,7 @@ openshift_deployment_type=origin
 # 多租户网络
 os_sdn_network_plugin_name=redhat/openshift-ovs-multitenant
 
-openshift_master_identity_providers=[{'name': 'my_ldap_provider', 'challenge': 'true', 'login': 'true', 'kind': 'LDAPPasswordIdentityProvider', 'attributes': {'id': ['dn'], 'email': ['mail'], 'name': ['cn'], 'preferredUsername': ['cn']}, 'bindDN': 'cn=admin,dc=general,dc=com’, 'bindPassword': 'generalcom', 'ca': '', 'insecure': 'true', 'url': 'ldap://$CAAS_DOMAIN_LDAP:389/ou=users,dc=general,dc=com?cn'}]
+openshift_master_identity_providers=[{'name': 'my_ldap_provider', 'challenge': 'true', 'login': 'true', 'kind': 'LDAPPasswordIdentityProvider', 'attributes': {'id': ['dn'], 'email': ['mail'], 'name': ['cn'], 'preferredUsername': ['cn']}, 'bindDN': 'cn=admin,dc=general,dc=com', 'bindPassword': 'generalcom', 'ca': '', 'insecure': 'true', 'url': 'ldap://$CAAS_DOMAIN_LDAP:389/ou=users,dc=general,dc=com?cn'}]
 
 openshift_install_examples=true
 openshift_clock_enabled=true
@@ -87,7 +87,7 @@ osm_cluster_network_cidr=$CAAS_OSM_CLUSTER_NETWORK_CIDR
 # Configure node kubelet arguments. pods-per-core is valid in OpenShift Origin 1.3 or OpenShift Container Platform 3.3 and later.
 openshift_node_kubelet_args={'pods-per-core': ['10'], 'max-pods': ['320'], 'image-gc-high-threshold': ['90'], 'image-gc-low-threshold': ['80']}
 
-openshift_master_identity_providers=[{'name': 'my_ldap_provider', 'challenge': 'true', 'login': 'true', 'kind': 'LDAPPasswordIdentityProvider', 'attributes': {'id': ['dn'], 'email': ['mail'], 'name': ['cn'], 'preferredUsername': ['cn']}, 'bindDN': 'cn=admin,dc=general,dc=com’, 'bindPassword': 'generalcom', 'ca': '', 'insecure': 'true', 'url': 'ldap://$CAAS_DOMAIN_LDAP:389/ou=users,dc=general,dc=com?cn'}]
+openshift_master_identity_providers=[{'name': 'my_ldap_provider', 'challenge': 'true', 'login': 'true', 'kind': 'LDAPPasswordIdentityProvider', 'attributes': {'id': ['dn'], 'email': ['mail'], 'name': ['cn'], 'preferredUsername': ['cn']}, 'bindDN': 'cn=admin,dc=general,dc=com', 'bindPassword': 'generalcom', 'ca': '', 'insecure': 'true', 'url': 'ldap://$CAAS_DOMAIN_LDAP:389/ou=users,dc=general,dc=com?cn'}]
 
 # for ca
 openshift_ca_cert_expire_days=1825
