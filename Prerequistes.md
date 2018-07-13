@@ -231,7 +231,8 @@ cat > prepare.yaml << EOF
         - sos 
         - psacct
         - PyYAML
-        
+        - python-ipaddress
+
     - name: copy caas host resolve to all hosts
       copy: src=./extra_hosts dest=/tmp/extra_hosts force=true
     - name: add extra host
