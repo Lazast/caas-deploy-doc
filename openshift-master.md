@@ -6,6 +6,63 @@
 
 ## 安装步骤
 
+> 配置LB节点keepalived，生成配置文件
+
+```
+cat > keepalived.conf << EOF
+
+! Configuration File for keepalived
+vrrp_instance VI_1 {
+    state {{ lb_role }}
+    interface eth0
+    virtual_router_id 85
+    priority {{ pri }}
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 123456
+    }
+    virtual_ipaddress {
+        $CAAS_VIP_LOADBALANCE
+    }
+}
+EOF
+
+```
+
+> 配置LB节点keepalived
+
+```
+cat > keepalived.yaml << EOF
+
+---
+- hosts: "{{ groups.lbs[0] }}"
+  vars:
+    lb_role: "MASTER"
+    pri: 101
+  tasks:
+    - name: install keepalived 
+      yum: name=keepalived state=absent
+    - name: copy keeplived config
+      template: src=./keepalived.conf dest=/etc/keepalived/keepalived.conf
+    - name: start keepalived 
+      service: name=keepalived state=restarted enabled=true
+
+- hosts: "{{ groups.lbs[1] }}"
+  vars:
+    lb_role: "BACKUP"
+    pri: 99 
+  tasks:
+    - name: install keepalived 
+      yum: name=keepalived state=absent
+    - name: copy keeplived config
+      template: src=./keepalived.conf dest=/etc/keepalived/keepalived.conf
+    - name: start keepalived 
+      service: name=keepalived state=restarted enabled=true
+
+EOF
+```
+
 > 生成openshift inventory变量配置
 
 ```
