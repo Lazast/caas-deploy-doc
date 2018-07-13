@@ -57,7 +57,7 @@ if [ "$validdata" == "" ]; then
 else
    echo "找到>50G的分区目录: $validdata"
    offlinedata=$validdata
-   echo "offlinedata=$validdata" >> ~/.bashrc
+   echo "export offlinedata=$validdata" >> ~/.bashrc
    mkdir -p $offlinedata
 fi
 ```
@@ -76,7 +76,8 @@ cd $offlinedata/caas-offline/cent7.2
 nohup python -m SimpleHTTPServer 38888 &
 
 # 配置iptables 规则，其实能访问
-iptables -I INPUT -p tcp  --dport 38888 -j ACCEPT
+iptables -I INPUT -p tcp  --dport 38888 -j ACCEPT  && service iptables save
+
 ```
 
 ## master1配置ansible
@@ -180,6 +181,27 @@ EOF
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./selinux-check.yaml
 ```
 
+**若上边操作重启了master1节点，请在master1上执行下面“开始”-“结束”之间的命令，否则不必执行**
+
+\#\#\#\#\#\#开始\#\#\#\#\#
+
+```
+cd $offlinedata/caas-offline/cent7.2
+
+# 重新启动 http 服务，搭建caas的yum源
+
+nohup python -m SimpleHTTPServer 38888 &
+
+# 进入caas安装目录
+cd $offlinedata/caas-offline/install
+```
+
+\#\#\#\#\#\#结束\#\#\#\#\#
+
+
+
+
+
 > 生成prepare配置文件， 进行环境的一些准备工作
 
 ```
@@ -244,12 +266,6 @@ cat > prepare.yaml << EOF
 EOF
 
 ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ./prepare.yaml
-```
-
-> 退出 master1 主机，执行命令
-
-```
-exit
 ```
 
 Next:  [docker](/docker.md)[ ](/host-role.md)
