@@ -54,13 +54,11 @@ validdata=$(df -m |sed 1d |sort -rn -k2 |awk '{if($2>50000) print $6}'  | head -
 echo $validdata
 if [ "$validdata" == "" ]; then
    echo "没有找到>50G的分区，无法执行后续的操作，请联系相关人员 ..."
-   exit 1
 else
    echo "找到>50G的分区目录: $validdata"
    offlinedata=$validdata
    echo "offlinedata=$validdata" >> ~/.bashrc
    mkdir -p $offlinedata
-   exit 1
 fi
 ```
 
