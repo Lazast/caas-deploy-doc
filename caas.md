@@ -234,7 +234,15 @@ ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=
 > 配置DNS
 
 ```
+cat > domain.conf << EOF
+address=/$CAAS_DOMAIN_LDAP/$CAAS_VIP_MYSQL_LDAP 
+address=/$CAAS_DOMAIN_HARBOR/$CAAS_VIP_HARBOR 
+address=/.$CAAS_DOMAIN_PAN/$CAAS_VIP_LOADBALANCE 
+EOF
 
+
+ansible -i ansible_hosts all -m copy -a 'src=./domain.conf dest=/etc/dnsmasq.d/'
+ansible -i ansible_hosts all -m shell -a 'systemctl restart dnsmasq'
 ```
 
 ## 验证
