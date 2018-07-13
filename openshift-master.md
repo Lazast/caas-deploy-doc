@@ -127,6 +127,11 @@ EOF
 
 tar -xvf ../openshift/openshift-ansible.tar -C ../openshift/
 
+# import image for openshift
+cd ../images/os39-base-images/
+./import.sh
+cd -
+
 ansible-playbook -i ./ansible_os_hosts --ssh-common-args "-o StrictHostKeyChecking=no" ../openshift/openshift-ansible/playbooks/deploy_cluster.yml
 # 当前节点为master1
 oc adm policy add-cluster-role-to-user cluster-admin admin
