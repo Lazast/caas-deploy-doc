@@ -130,5 +130,5 @@ ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=
 
 ## 验证 {#验证}
 
-Next:[openshift master](/openshift-master.md)
+Next:[openshift](/openshift-master.md)
 
