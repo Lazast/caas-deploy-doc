@@ -1,8 +1,8 @@
 # Summary
 
 * [Introduction](README.md)
-* [resource planning](host-role.md)
 * [requirements](requirements.md)
+* [resource planning](host-role.md)
 * [Prerequisites](Prerequistes.md)
 * [docker](docker.md)
 * [ldap](ldap.md)
