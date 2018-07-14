@@ -238,6 +238,12 @@ cat > caasportal.yaml << EOF
       template:
         src: ../caas/portal/ompall.yml
         dest: /tmp/ompall.yml
+    - name: create project caasportal
+      shell: oc login -uadmin -pCaas54321 && oc get project caasportal || oc new-project caasportal
+    - name: set default scc to privileged and add privileged to project caasportal
+      shell: ../caas/portal/addscc.sh
+    - name: create secret deploycaas
+      shell: oc get secret deploycaas || oc create secret docker-registry deploycaas -n caasportal --docker-username=admin --docker-password=Caas12345 --docker-email="admin@example.com" --docker-server="http://harbor.caas.example.com"
     - name: deploy the caasportal
       shell: oc login -uadmin -pCaas54321 && oc create -f /tmp/ompall.yml
 EOF
