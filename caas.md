@@ -242,6 +242,7 @@ cat > caasportal.yaml << EOF
       shell: oc login -uadmin -pCaas54321 && oc get project caasportal || oc new-project caasportal
     - name: set default scc to privileged and add privileged to project caasportal
       shell: ../caas/portal/addscc.sh
+    - name: 
     - name: create secret deploycaas
       shell: oc get secret deploycaas || oc create secret docker-registry deploycaas -n caasportal --docker-username=admin --docker-password=Caas12345 --docker-email="admin@example.com" --docker-server="http://$CAAS_DOMAIN_HARBOR"
     - name: deploy the caasportal
@@ -626,6 +627,23 @@ oc create -f prometheus/prometheus-pods.yml
 scp prometheus/alert.rules $CAAS_VIP_NFS:/nfs/prometheusrule/
 
 EOF
+
+cat > node_exporter.yml << EOF
+---
+- hosts: all
+  tasks: 
+    - name: copy the node_exporter to all the server
+      copy:
+        src: ../caas/prometheus/node_exporter
+        dest: /usr/bin/node_exporter
+        mode: 0755
+    - name: start the node_exporter
+      shell: 'nohup /usr/bin/node_exporter &'
+    - name: open the port:9100 for node_exporter
+      shell: 'iptables -nL|grep 9100 || iptables -I INPUT -p tcp --dport 9100 -j ACCEPT && iptables-save'
+EOF
+
+ansible-playbook -i ansible_hosts node_exporter.yml
 
 chmod +x  prometheus-setup.sh
 ./prometheus-setup.sh
