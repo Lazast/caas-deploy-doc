@@ -254,6 +254,381 @@ ansible-playbook -i ./ansible_hosts --ssh-common-args "-o StrictHostKeyChecking=
 > 部署promethues
 
 ```
+mkdir -p prometheus
+cp ../caas/prometheus/config/alert.rules prometheus/
+cp ../caas/prometheus/config/config.yml prometheus/
+
+cat > prometheus/prometheus-pods.yml << EOF
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: prometheus
+  namespace: prometheus
+  labels:
+    name: prometheus-deployment
+spec:
+  replicas: 1
+  selector:
+    app: prometheus
+  template:
+    metadata:
+      namespace: prometheus
+      labels:
+        app: prometheus
+    spec:
+      volumes:
+        - name: data
+          hostPath:
+            path: /prometheus
+        - name: config-volume
+          configMap:
+            name: prometheus-config
+        - name: rule
+          persistentVolumeClaim:
+            claimName: promrule
+      containers:
+        - name: prometheus
+          image: $CAAS_DOMAIN_HARBOR/openshift/prometheus:v1.8.1
+          command:
+            - /bin/prometheus
+          args:
+            - '-config.file=/etc/prometheus/prometheus.yml'
+            - '-storage.local.path=/prometheus'
+            - '-storage.local.retention=168h'
+            - '-alertmanager.url=http://alertmanager:9093'
+            - '-web.external-url=http://$CAAS_DOMAIN_PROM'
+          ports:
+            - containerPort: 9090
+              protocol: TCP
+          resources:
+            limits:
+              cpu: '8'
+              memory: 4Gi
+            requests:
+              cpu: '1'
+              memory: 2Gi
+          volumeMounts:
+            - name: data
+              mountPath: /prometheus
+            - name: config-volume
+              mountPath: /etc/prometheus
+            - name: rule
+              mountPath: /rules
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+      restartPolicy: Always
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        kubernetes.io/hostname: $(env |grep CAAS_HOST_NODE1 |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print arrays[3]}}') 
+
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: alertmanager
+  namespace: prometheus
+  labels:
+    name: alertmanager
+spec:
+  replicas: 1
+  selector:
+    app: alertmanager
+  template:
+    metadata:
+      labels:
+        app: alertmanager
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: alertmanager
+        - name: data
+          persistentVolumeClaim:
+            claimName: alertmanager
+      containers:
+        - name: alertmanager
+          image: $CAAS_DOMAIN_HARBOR/openshift/alertmanager
+          command:
+            - /bin/alertmanager
+          args:
+            - '-config.file=/etc/alertmanager/config.yml'
+            - '-storage.path=/alertmanager'
+            - '-web.external-url=http://$CAAS_DOMAIN_ALERT/'
+          ports:
+            - containerPort: 9093
+              protocol: TCP
+          resources:
+            limits:
+              cpu: '1'
+              memory: 2500Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          volumeMounts:
+            - name: data
+              mountPath: /alertmanager
+            - name: config
+              mountPath: /etc/alertmanager
+          terminationMessagePath: /dev/termination-log
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        kubernetes.io/hostname: $(env |grep CAAS_HOST_NODE1 |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print arrays[3]}}')
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: grafana
+  namespace: prometheus 
+  labels:
+    app: grafana
+spec:
+  replicas: 1
+  selector:
+    app: grafana
+    deploymentconfig: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+        deploymentconfig: grafana
+    spec:
+      volumes:
+        - name: grafana-2
+          emptyDir: {}
+        - name: grafana-3
+          emptyDir: {}
+      containers:
+        - name: grafana
+          image: $CAAS_DOMAIN_HARBOR/openshift/grafana
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          env:
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              value: grafana_1234
+          resources: {}
+          volumeMounts:
+            - name: grafana-2
+              mountPath: /var/lib/grafana
+            - name: grafana-3
+              mountPath: /var/log/grafana
+          terminationMessagePath: /dev/termination-log
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alertmanager
+  namespace: prometheus
+  labels:
+    app: alertmanager
+spec:
+  ports:
+    - name: 9093-tcp
+      protocol: TCP
+      port: 9093
+      targetPort: 9093
+  selector:
+    deploymentconfig: alertmanager
+  type: NodePort
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+  namespace: prometheus
+  labels:
+    app: prometheus
+spec:
+  ports:
+    - name: 9090-tcp
+      protocol: TCP
+      port: 9090
+      targetPort: 9090
+  selector:
+    deploymentconfig: prometheus
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: prometheus
+  labels:
+    app: grafana
+spec:
+  ports:
+    - name: 3000-tcp
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+  selector:
+    deploymentconfig: grafana
+  type: ClusterIP
+
+#Follows are the routes 
+---
+apiVersion: v1
+kind: Route
+metadata:
+  name: grafana
+  namespace: prometheus
+spec:
+  host: $CAAS_DOMAIN_GRAFANA 
+  to:
+    kind: Service
+    name: grafana
+  port:
+    targetPort: 3000-tcp
+  wildcardPolicy: None
+---
+apiVersion: v1
+kind: Route
+metadata:
+  name: prometheus
+  namespace: prometheus
+spec:
+  host: $CAAS_DOMAIN_PROM 
+  to:
+    kind: Service
+    name: prometheus
+    weight: 100
+  port:
+    targetPort: 9090-tcp
+  wildcardPolicy: None
+---
+apiVersion: v1
+kind: Route
+metadata:
+  name: alertmanager
+  namespace: prometheus
+spec:
+  host: $CAAS_DOMAIN_ALERT 
+  to:
+    kind: Service
+    name: alertmanager
+    weight: 100
+  port:
+    targetPort: 9093-tcp
+  wildcardPolicy: None
+EOF
+
+
+cat > prometheus/volumes.yml << EOF
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: alertmanager
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: "1024Mi"
+  nfs:
+    path: /nfs/alertmanager/
+    server: $CAAS_VIP_NFS
+  persistentVolumeReclaimPolicy: Retain
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: promrule
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: "2048Mi"
+  nfs:
+    path: /nfs/prometheusrule
+    server: $CAAS_VIP_NFS
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: alertmanager
+  namespace: prometheus
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 1024Mi
+  volumeName: alertmanager
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: promrule
+  namespace: prometheus
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 2048Mi
+  volumeName: promrule
+EOF
+
+cat ../caas/prometheus/config/prometheus.yaml > prometheus/prometheus.yml
+hostname_ip=$(env |grep CAAS_HOST |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print arrays[3]" " $2}}')
+tempfile=$(mktemp temp.XXXXXX)
+index=0
+host=""
+ip=""
+for i in $hostname_ip;do
+    let tmp=$index%2  
+    if [ $tmp -ne 0 ];then
+        ip=$i
+cat >> $tempfile << EOF
+    - targets: ['$ip:9100']
+      labels:
+        alias: $host 
+EOF
+    else
+        host=$i
+    fi
+    let index=$index+1
+done
+
+cat $tempfile >> prometheus/prometheus.yml
+
+
+cat > prometheus-setup.sh << EOF
+curl -X GET 'http://$CAAS_VIP_NFS:8080/nfs/create?volName=prometheusrule&volSize=2048'
+curl -X GET 'http://$CAAS_VIP_NFS:8080/nfs/create?volName=alertmanager&volSize=1024'
+
+oc login --username=admin --password=Caas54321 --insecure-skip-tls-verify=true 
+oc project prometheus  || oc new-project prometheus
+
+oc adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:prometheus:default
+oc adm policy add-scc-to-user privileged system:serviceaccount:prometheus:default
+oc create configmap prometheus-config --from-file=prometheus/prometheus.yml
+oc create configmap alertmanager --from-file=prometheus/config.yml
+
+
+oc create -f prometheus/volumes.yml
+sleep 5
+oc create -f prometheus/prometheus-pods.yml
+
+scp prometheus/alert.rules $CAAS_VIP_NFS:/nfs/prometheusrule/
+
+EOF
+
+chmod +x  prometheus-setup.sh
+./prometheus-setup.sh
 
 ```
 
