@@ -42,7 +42,7 @@ cat > keepalived.yaml << EOF
     pri: 101
   tasks:
     - name: install keepalived 
-      yum: name=keepalived state=absent
+      yum: name=keepalived state=present
     - name: copy keeplived config
       template: src=./keepalived.conf dest=/etc/keepalived/keepalived.conf
     - name: start keepalived 
@@ -54,7 +54,7 @@ cat > keepalived.yaml << EOF
     pri: 99 
   tasks:
     - name: install keepalived 
-      yum: name=keepalived state=absent
+      yum: name=keepalived state=present
     - name: copy keeplived config
       template: src=./keepalived.conf dest=/etc/keepalived/keepalived.conf
     - name: start keepalived 
@@ -184,8 +184,10 @@ EOF
 
 
 # import image for openshift
+yum install -y unzip
+unzip -q ../images/os39-base-images.zip -d ../images/
 cd ../images/os39-base-images/
-./import.sh
+./import.sh $CAAS_DOMAIN_HARBOR Caas12345
 cd -
 
 tar -xvf ../openshift/openshift-ansible.tar -C ../openshift/
@@ -194,6 +196,119 @@ ansible-playbook -i ./ansible_os_hosts --ssh-common-args "-o StrictHostKeyChecki
 # 当前节点为master1
 oc adm policy add-cluster-role-to-user cluster-admin admin
 ```
+> 添加loadbalance节点80,443,30000-32767端口部分
+```
+cat > config-haproxy-lb << EOF
+# Global settings
+#---------------------------------------------------------------------
+global
+    maxconn     20000
+    log         /dev/log local0 info
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    user        haproxy
+    group       haproxy
+    daemon
+
+    # turn on stats unix socket
+    stats socket /var/lib/haproxy/stats
+
+#---------------------------------------------------------------------
+# common defaults that all the 'listen' and 'backend' sections will
+# use if not designated in their block
+#---------------------------------------------------------------------
+defaults
+    mode                    http
+    log                     global
+    option                  httplog
+    option                  dontlognull
+#    option http-server-close
+    option forwardfor       except 127.0.0.0/8
+    option                  redispatch
+    retries                 3
+    timeout http-request    10s
+    timeout queue           1m
+    timeout connect         10s
+    timeout client          300s
+    timeout server          300s
+    timeout http-keep-alive 10s
+    timeout check           10s
+    maxconn                 20000
+
+listen stats
+    bind :9000
+    mode http
+    stats enable
+    stats uri /
+
+frontend  atomic-openshift-api
+    bind *:8443
+    default_backend atomic-openshift-api
+    mode tcp
+    option tcplog
+
+backend atomic-openshift-api
+    balance source
+    mode tcp
+    server      master0 {{ groups.masters[0] }}:8443 check
+    server      master1 {{ groups.masters[1] }}:8443 check
+    server      master2 {{ groups.masters[2] }}:8443 check
+
+frontend  atomic-openshift-http
+    bind *:80
+    default_backend atomic-openshift-http
+    mode tcp
+    option tcplog
+
+backend atomic-openshift-http
+    balance source
+    mode tcp
+    server      master0 {{ groups.masters[0] }}:80 check
+    server      master1 {{ groups.masters[1] }}:80 check
+    server      master2 {{ groups.masters[2] }}:80 check
+
+frontend  atomic-openshift-https
+    bind *:443
+    default_backend atomic-openshift-https
+    mode tcp
+    option tcplog
+
+backend atomic-openshift-https
+    balance source
+    mode tcp
+    server      master0 {{ groups.masters[0] }}:443 check
+    server      master1 {{ groups.masters[1] }}:443 check
+    server      master2 {{ groups.masters[2] }}:443 check
+
+frontend tcp_30000-32767
+    bind *:30000-32767
+    mode tcp
+    default_backend tcp_30000-32767
+
+backend tcp_30000-32767
+    balance source
+    mode tcp
+    server      master0 {{ groups.masters[0] }}
+    server      master1 {{ groups.masters[1] }}
+    server      master2 {{ groups.masters[2] }}
+EOF
+
+cat > config-haproxy-lb.yml << EOF
+- hosts: lb
+  tasks:
+    - name: generate the configuration file for haproxy of lb
+      template:
+        src: config-haproxy-lb
+        dest: /etc/haproxy/haproxy.cfg
+    - name: restart haproxy to make the configuration take effect
+      systemd:
+        name: haproxy
+        state: restarted
+EOF
+
+ansible-playbook -i ./ansible_os_hosts --ssh-common-args "-o StrictHostKeyChecking=no" config-haproxy-lb.yml
+```
+
 
 ## 验证
 

@@ -241,8 +241,9 @@ cat > caasportal.yaml << EOF
     - name: create project caasportal
       shell: oc login -uadmin -pCaas54321 && oc get project caasportal || oc new-project caasportal
     - name: set default scc to privileged and add privileged to project caasportal
-      shell: ../caas/portal/addscc.sh
-    - name: 
+      shell: ./addscc.sh
+      args:
+        chdir: ../caas/portal/
     - name: create secret deploycaas
       shell: oc get secret deploycaas || oc create secret docker-registry deploycaas -n caasportal --docker-username=admin --docker-password=Caas12345 --docker-email="admin@example.com" --docker-server="http://$CAAS_DOMAIN_HARBOR"
     - name: deploy the caasportal

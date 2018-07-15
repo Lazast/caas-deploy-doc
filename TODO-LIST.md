@@ -1,4 +1,5 @@
 # TODO LIST
-- S2I images import
-- platform images import
-- automation verification
+- S2I镜像导入
+- 平台影响导入
+- 应用商店镜像导入
+- 自动化测试

@@ -121,6 +121,40 @@ ssh root@${CAAS_HOST_MASTER1}
 
 ```
 cd $offlinedata/caas-offline/install/
+cat > docker << EOF
+# /etc/sysconfig/docker
+
+# Modify these options if you want to change the way the docker daemon runs
+OPTIONS='--selinux-enabled --signature-verification=false --log-driver=json-file --log-opt max-size=50m -l warn --ipv6=false'
+if [ -z "${DOCKER_CERT_PATH}" ]; then
+    DOCKER_CERT_PATH=/etc/docker
+fi
+
+# Do not add registries in this file anymore. Use /etc/containers/registries.conf
+# from the atomic-registries package.
+#
+
+# On an SELinux system, if you remove the --selinux-enabled option, you
+# also need to turn on the docker_transition_unconfined boolean.
+# setsebool -P docker_transition_unconfined 1
+
+# Location used for temporary files, such as those created by
+# docker load and build operations. Default is /var/lib/docker/tmp
+# Can be overriden by setting the following environment variable.
+# DOCKER_TMPDIR=/var/tmp
+
+# Controls the /etc/cron.daily/docker-logrotate cron job status.
+# To disable, uncomment the line below.
+# LOGROTATE=false
+
+# docker-latest daemon can be used by starting the docker-latest unitfile.
+# To use docker-latest client, uncomment below lines
+#DOCKERBINARY=/usr/bin/docker-latest
+#DOCKERDBINARY=/usr/bin/dockerd-latest
+#DOCKER_CONTAINERD_BINARY=/usr/bin/docker-containerd-latest
+#DOCKER_CONTAINERD_SHIM_BINARY=/usr/bin/docker-containerd-shim-latest
+INSECURE_REGISTRY='--insecure-registry $CAAS_DOMAIN_HARBOR'
+EOF
 
 cat > docker.yaml << EOF
 
@@ -155,10 +189,10 @@ cat > docker.yaml << EOF
     - name: add insecure registry
       shell: echo "INSECURE_REGISTRY='--insecure-registry $CAAS_DOMAIN_HARBOR'" >> /etc/sysconfig/docker
 
-- hosts: localhost
+- hosts: masters,nodes
   tasks:
-    - name: set insecure registry for master1
-      shell: echo "INSECURE_REGISTRY='--insecure-registry $CAAS_DOMAIN_HARBOR'" >> /etc/sysconfig/docker
+    - name: configure docker 
+      copy: src=./docker dest=/etc/sysconfig/docker
 
 - hosts: all
   tasks:

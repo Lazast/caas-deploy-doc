@@ -76,7 +76,7 @@ cd $offlinedata/caas-offline/cent7.2
 nohup python -m SimpleHTTPServer 38888 &
 
 # 配置iptables 规则，其实能访问
-iptables -I INPUT -p tcp  --dport 38888 -j ACCEPT  && service iptables save
+iptables -I INPUT -p tcp  --dport 38888 -j ACCEPT 
 ```
 
 ## master1配置ansible
@@ -106,7 +106,7 @@ cp caas.repo /tmp/caas.repo
 
 ```bash
 cd $offlinedata/caas-offline
-mkdir install
+mkdir -p install
 cd  install
 
 env |grep CAAS_HOST_MASTER |awk -F '=' '{if ($2!="") { split(tolower($1),arrays, "_"); print $2" hostname="arrays[3]}}' > /tmp/masters
@@ -191,6 +191,7 @@ cd $offlinedata/caas-offline/cent7.2
 # 重新启动 http 服务，搭建caas的yum源
 
 nohup python -m SimpleHTTPServer 38888 &
+iptable -I INPUT -p tcp --dport 38888 -j ACCEPT
 
 # 进入caas安装目录
 cd $offlinedata/caas-offline/install
